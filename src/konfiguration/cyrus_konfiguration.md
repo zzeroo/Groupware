@@ -152,6 +152,7 @@ ln -s /usr/lib/cyrus/bin/imtest /usr/bin/
 
 ```bash
 imtest -t "" -u imapuser -a imapuser -w ***REMOVED*** localhost
+imtest -t "" -u d.pfeiffer -a d.pfeiffer -w pfeiffer localhost
 ```
 
 ----
@@ -196,6 +197,9 @@ unixhierarchysep: yes
 ```bash
 echo '***REMOVED***' | saslpasswd2 -p -c s.mueller
 echo 'belser' | saslpasswd2 -p -c i.belser
+echo 'kliemann' | saslpasswd2 -p -c h.kliemann
+echo 'keilhofer' | saslpasswd2 -p -c k.keilhofer
+echo 'pfeiffer' | saslpasswd2 -p -c d.pfeiffer
 ```
 
 ## Mailboxen anlegen
@@ -216,7 +220,14 @@ Dieser Fehler tritt auf wenn SOGo versucht den Send Ordner im IMAP eines Users z
 
 ## Lösung: "SOGo Sent is not an IMAP4 folder"
 
-Die Cyrus Benutzer und Mailboxen müssen von Hand angelegt werden.
+In der Datei `/etc/imapd.conf` muss der Parameter `altnamespace: yes` gesetzt sein (default ist `altnamespace: no`)
+
+```bash
+# /etc/imapd.conf
+# ...
+altnamespace: yes
+# ...
+```
 
 
 ## Fehler: `DBERROR: opening /var/lib/cyrus/tls_sessions.db: cyrusdb error`
@@ -233,7 +244,11 @@ Jul 20 11:39:27 sogo cyrus/master[10048]: exiting
 Jul 20 11:39:27 sogo systemd[1]: cyrus-imapd.service: Failed with result 'exit-code'.
 ```
 
-## Lösung `DBERROR: opening /var/lib/cyrus/tls_sessions.db: cyrusdb error`
+## Lösung 1 `DBERROR: opening /var/lib/cyrus/tls_sessions.db: cyrusdb error`
+
+**Es scheint ganz so das nach dem SSL Setup dieser Fehler verschwindet.**
+
+## Lösung 2 `DBERROR: opening /var/lib/cyrus/tls_sessions.db: cyrusdb error`
 
 Im START Block muss die Zeile `tlsprune›  cmd="/usr/sbin/cyrus tls_prune"` auskommentiert werden.
 
