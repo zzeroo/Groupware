@@ -8,52 +8,44 @@ Bei der OpenLDAP Installation wurde nur nach dem LDAP Password gefragt. Eine Vol
 dpkg-reconfigure -plow slapd
 ```
 
+[![](../images/slapd-konfiguration-1.png)](../images/slapd-konfiguration-1.png)
+
+[![](../images/slapd-konfiguration-2.png)](../images/slapd-konfiguration-2.png)
+
+[![](../images/slapd-konfiguration-3.png)](../images/slapd-konfiguration-3.png)
+
+[![](../images/slapd-konfiguration-4.png)](../images/slapd-konfiguration-4.png)
+
+[![](../images/slapd-konfiguration-5.png)](../images/slapd-konfiguration-5.png)
+
+[![](../images/slapd-konfiguration-6.png)](../images/slapd-konfiguration-6.png)
+
+[![](../images/slapd-konfiguration-7.png)](../images/slapd-konfiguration-7.png)
+
+
 Die Konfigruation kann mit diesem Befehl geprüft werden:
 
 ```bash
 ldapsearch -Y EXTERNAL -H ldapi:/// -b "cn=config" 
 ```
 
-## SOGo Konfiguration
-
-```conf
-# /etc/sogo/sogo.conf
-
-  SOGoUserSources = ( 
-    {
-      type = ldap;
-      CNFieldName = cn; 
-      UIDFieldName = uid;
-      IDFieldName = uid; // first field of the DN for direct binds
-      bindFields = (uid, mail); // array of fields to use for indirect binds
-      baseDN = "ou=Users,dc=sogo,dc=zzeroo,dc=org";
-      bindDN = "uid=sogo,ou=Users,dc=sogo,dc=zzeroo,dc=org";
-      bindPassword = ***REMOVED***;
-      canAuthenticate = YES;
-      displayName = "Shared Addresses";
-      hostname = ldap://127.0.0.1:389;
-      id = public;
-      isAddressBook = YES;
-    }
-  );
-```
-
 ## Users und Groups anlegen
 
 Datei `frontend.sogo.zzeroo.org.ldif` anlegen.
 
-```bash
-dn: ou=Users,dc=sogo,dc=zzeroo,dc=org
+```ini
+# frontend.sogo.zzeroo.org.ldif
+dn: ou=users,dc=zzeroo,dc=org
 objectClass: organizationalUnit
-ou: Users
+ou: users
 
-dn: ou=Groups,dc=sogo,dc=zzeroo,dc=org
+dn: ou=groups,dc=zzeroo,dc=org
 objectClass: organizationalUnit
-ou: Groups
+ou: groups
 ```
 
 ```bash
-ldapadd -f frontend.sogo.zzeroo.org.ldif -x -w ***REMOVED*** -D cn=admin,dc=sogo,dc=zzeroo,dc=org
+ldapadd -f frontend.sogo.zzeroo.org.ldif -x -w ***REMOVED*** -D cn=admin,dc=zzeroo,dc=org
 ```
 
 ## Benutzer hinzufügen
@@ -61,114 +53,102 @@ ldapadd -f frontend.sogo.zzeroo.org.ldif -x -w ***REMOVED*** -D cn=admin,dc=sogo
 
 Lege eine Datei `sogo.ldif` mit folgendem Inhalt an:
 
-```ldif
-dn: uid=sogo,ou=Users,dc=sogo,dc=zzeroo,dc=org
+```ini
+# sogo.ldif
+dn: uid=sogo,ou=users,dc=zzeroo,dc=org
 objectClass: top
 objectClass: inetOrgPerson
 objectClass: person
 objectClass: organizationalPerson
 uid: sogo
 cn: SOGo Administrator
-mail: sogo@zzeroo.com
+mail: sogo@zzeroo.org
 sn: Administrator
 givenName: SOGo
 ```
 
 ```bash
-ldapadd -f sogo.ldif -x -w ***REMOVED*** -D cn=admin,dc=sogo,dc=zzeroo,dc=org
+ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// -f sogo.ldif
 ```
 
 Password des Benutzers setzen
 
 ```bash
-ldappasswd -h 127.0.0.1 -x -w ***REMOVED*** -D cn=admin,dc=sogo,dc=zzeroo,dc=org uid=sogo,ou=Users,dc=sogo,dc=zzeroo,dc=org -s ***REMOVED***
+ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// uid=sogo,ou=users,dc=zzeroo,dc=org -s ***REMOVED***
 ```
 
-### Normale SOGo User
+### SOGo User
 
-smueller.ldif
-```ldif
-dn: uid=smueller,ou=Users,dc=sogo,dc=zzeroo,dc=org
+Eine Datei mit dem Namen `users.ldif` anlegen.
+
+```ini
+# users.ldif
+
+# S. Mueller
+dn: uid=smueller,ou=users,dc=zzeroo,dc=org
 objectClass: top
 objectClass: inetOrgPerson
 objectClass: person
 objectClass: organizationalPerson
 uid: smueller
 cn: Stefan Müller
-mail: smueller@zzeroo.org
-sn: Mueller
-givenName: Stefan
-```
-
-```bash
-ldapadd -f smueller.ldif -x -w ***REMOVED*** -D cn=admin,dc=sogo,dc=zzeroo,dc=org
-```
-
-Password des Benutzers setzen
-
-```bash
-ldappasswd -h 127.0.0.1 -x -w ***REMOVED*** -D cn=admin,dc=sogo,dc=zzeroo,dc=org uid=smueller,ou=Users,dc=sogo,dc=zzeroo,dc=org -s ***REMOVED***
-```
-
-## KLS Benutzer anlegen
-
-
-```bash
-# users.ldif
-
-# S. Mueller
-dn: uid=s.mueller,ou=Users,dc=sogo,dc=zzeroo,dc=org
-objectClass: top
-objectClass: inetOrgPerson
-objectClass: person
-objectClass: organizationalPerson
-uid: s.mueller
-cn: Stefan Müller
 mail: s.mueller@zzeroo.org
 sn: Mueller
 givenName: Stefan
 
-# I. Belser
-dn: uid=i.belser,ou=Users,dc=sogo,dc=zzeroo,dc=org
+# H. Kliemann
+dn: uid=hkliemann,ou=users,dc=zzeroo,dc=org
 objectClass: top
 objectClass: inetOrgPerson
 objectClass: person
 objectClass: organizationalPerson
-uid: i.belser
+uid: hkliemann
+cn: Helge Kliemann
+mail: h.kliemann@zzeroo.org
+sn: Kliemann
+givenName: Helge
+
+# I. Belser
+dn: uid=ibelser,ou=users,dc=zzeroo,dc=org
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: organizationalPerson
+uid: ibelser
 cn: Ingrid Belser
 mail: i.belser@zzeroo.org
 sn: Belser
 givenName: Ingrid
 
 # K. Keilhofer
-dn: uid=k.keilhofer,ou=Users,dc=sogo,dc=zzeroo,dc=org
+dn: uid=kkeilhofer,ou=users,dc=zzeroo,dc=org
 objectClass: top
 objectClass: inetOrgPerson
 objectClass: person
 objectClass: organizationalPerson
-uid: k.keilhofer
+uid: kkeilhofer
 cn: Karlheinz Keilhofer
 mail: k.keilhofer@zzeroo.org
 sn: Keilhofer
 givenName: Karlheinz
 
-# H. Kliemann
-dn: uid=h.kliemann,ou=Users,dc=sogo,dc=zzeroo,dc=org
+# D. Pfeiffer
+dn: uid=dpfeiffer,ou=users,dc=zzeroo,dc=org
 objectClass: top
 objectClass: inetOrgPerson
 objectClass: person
 objectClass: organizationalPerson
-uid: h.kliemann
-cn: Helge Kliemann
-mail: h.kliemann@zzeroo.org
-sn: Kliemann
-givenName: Helge  
+uid: dpfeiffer
+cn: Dennis Pfeiffer
+mail: d.pfeiffer@zzeroo.org
+sn: Pfeiffer
+givenName: Dennis
 ```
 
-users.ldif einlesen
+Anschließend wird die `users.ldif` eingelesen.
 
 ```bash
-ldapadd -x -D cn=admin,dc=sogo,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// -f users.ldif
+ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// -f users.ldif
 ```
 
 
@@ -177,30 +157,239 @@ ldapadd -x -D cn=admin,dc=sogo,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// -f u
 Die Passworte (Parameter `-s`) können jederzeit und immer wieder geändert werden. Wird der Parameter `-s` weg gelassen dann wird ein zufälliges Passwort vergeben.
 
 ```bash
-ldappasswd -h 127.0.0.1 -x -w ***REMOVED*** -D cn=admin,dc=sogo,dc=zzeroo,dc=org uid=s.mueller,ou=Users,dc=sogo,dc=zzeroo,dc=org -s ***REMOVED***
-
-ldappasswd -h 127.0.0.1 -x -w ***REMOVED*** -D cn=admin,dc=sogo,dc=zzeroo,dc=org uid=i.belser,ou=Users,dc=sogo,dc=zzeroo,dc=org -s belser
-
-ldappasswd -h 127.0.0.1 -x -w ***REMOVED*** -D cn=admin,dc=sogo,dc=zzeroo,dc=org uid=k.keilhofer,ou=Users,dc=sogo,dc=zzeroo,dc=org -s keilhofer
-
-ldappasswd -h 127.0.0.1 -x -w ***REMOVED*** -D cn=admin,dc=sogo,dc=zzeroo,dc=org uid=h.kliemann,ou=Users,dc=sogo,dc=zzeroo,dc=org -s kliemann
-
+ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// uid=smueller,ou=users,dc=zzeroo,dc=org -s ***REMOVED***
+ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// uid=hkliemann,ou=users,dc=zzeroo,dc=org -s kliemann
+ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// uid=ibelser,ou=users,dc=zzeroo,dc=org -s belser
+ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// uid=kkeilhofer,ou=users,dc=zzeroo,dc=org -s keilhofer
+ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// uid=dpfeiffer,ou=users,dc=zzeroo,dc=org -s pfeiffer
 ```
 
+# Indexing
 
+Für mehr Performance und im SOGo Manual empfohlen müssen einige Spalten indiziert werdebn
+
+```ini
+# olcDbIndex.ldif
+dn: olcDatabase={1}mdb,cn=config
+changetype: modify
+add: olcDbIndex
+olcDbIndex: sn pres,sub,eq
+- 
+add: olcDbIndex
+olcDbIndex: displayName pres,sub,eq
+- 
+add: olcDbIndex
+olcDbIndex: default sub
+-
+add: olcDbIndex
+olcDbIndex: mail,givenName eq,subinitial
+-
+add: olcDbIndex
+olcDbIndex: dc eq
+```
+
+Anschließend wieder mit `ldapmodify` einlesen.
+
+```bash
+ldapmodify -Y EXTERNAL -H ldapi:/// -f olcDbIndex.ldif
+```
+
+Prüfen kann man das wieder mit dem Befehl:
+
+```bash
+ldapsearch -Y EXTERNAL -H ldapi:/// -b "cn=config"
+```
+
+----
 
 # Tipp's
+
+## Bind testen
+
+```bash
+# ldapwhoami -vvv -h <hostname> -p <port> -D <binddn> -x -w <passwd>
+ldapwhoami -vvv -h localhost -D cn=admin,dc=zzeroo,dc=org -x -w ***REMOVED***
+ldapwhoami -vvv -h localhost -D uid=smueller,ou=users,dc=zzeroo,dc=org -x -w ***REMOVED***
+```
+
+## Log Level prüfen/ setzen
+
+[http://tutoriels.meddeb.net/openldap-log/][http://tutoriels.meddeb.net/openldap-log/]
+
+Der erste Befehl liefert die aktuelle Loglevel Konfiguration.
+
+```
+ldapsearch -Y external -H ldapi:/// -b cn=config "(objectClass=olcGlobal)" olcLogLevel -LLL 
+```
+
+```yaml
+# ldapsearch -Y external -H ldapi:/// -b cn=config "(objectClass=olcGlobal)" olcLogLevel -LLL 
+SASL/EXTERNAL authentication started
+SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+SASL SSF: 0
+dn: cn=config
+olcLogLevel: none
+```
+
+Zum Ändern erstellen wir wieder eine `slapdlog.ldif`
+
+```
+dn: cn=config
+changeType: modify
+replace: olcLogLevel
+olcLogLevel: stats
+```
+
+Diese Datei wird mit `ldapmodify` eingelesen.
+
+```
+ldapmodify -Y external -H ldapi:/// -f slapdlog.ldif
+```
+
+Das Ergebnis kann wieder mit dem Befehl `ldapsearch` geprüft werden.
+
+```
+ldapsearch -Y external -H ldapi:/// -b cn=config "(objectClass=olcGlobal)" olcLogLevel -LLL 
+```
+
+```bash
+systemctl restart slapd.service
+systemctl status slapd.service
+```
+
+### OpenLDAP log in rsyslog
+
+Im rsyslog Konfigurationsordner `/etc/rsyslog.d/` muss dazu eine Datei `10-slapd.conf` mit folgendem Inhalt erstellt werden:
+
+```
+local4.*    /var/log/slapd.log;
+```
+
+```
+vim /etc/rsyslog.conf
+```
+
+Zeile einfügen
+
+```
+$template slapdtmpl,"[%$DAY%-%$MONTH%-%$YEAR% %timegenerated:12:19:date-rfc3339%] %app-name% %syslogseverity-text% %msg%\n"
+```
+
+```bash
+systemctl restart rsyslog.service
+```
+
+```
+ldapsearch -Y external -H ldapi:/// 
+```
+
+```
+cat /var/log/slapd.log
+```
 
 ## Benutzer Löschen
 
 ```bash
-ldapdelete -h 127.0.0.1 -x -w ***REMOVED*** -D cn=admin,dc=sogo,dc=zzeroo,dc=org uid=smueller,ou=Users,dc=sogo,dc=zzeroo,dc=org
+ldapdelete -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// uid=smueller,ou=users,dc=zzeroo,dc=org
+```
+
+## Alle Benutzer auflisten
+
+```bash
+ldapsearch -xLLL -b dc=zzeroo,dc=org
+```
+
+## Enforce TLS connections
+
+>Achtung nach dieser Konfiguration ist nur noch die Kommunikation via TLS möglich!
+
+```
+# slapd_config_TLS_enforce.ldif
+dn: cn=config
+changetype: modify
+add: olcSecurity
+olcSecurity: tls=128
 ```
 
 ```bash
-ldapsearch -xLLL -b dc=sogo,dc=zzeroo,dc=org
+ldapmodify -Y EXTERNAL -H ldapi:/// -f slapd_config_TLS_enforce.ldif
 ```
 
+# TLS Setup
+
+> Nicht funktional
+
+* [https://www.dahlem.uk/display/deb/Configure+and+enable+TLS+for+OpenLDAP](https://www.dahlem.uk/display/deb/Configure+and+enable+TLS+for+OpenLDAP)
+* [https://serverfault.com/questions/459718/configure-openldap-with-tls-required](https://serverfault.com/questions/459718/configure-openldap-with-tls-required)
+* [https://serverfault.com/questions/777017/using-lets-encrypt-certificates-with-openldap/864655#864655](https://serverfault.com/questions/777017/using-lets-encrypt-certificates-with-opeservice slapd restart
+service apache2 restartnldap/864655#864655)
+
+Handle file system access to letsencrypt
+
+```bash
+useradd letsencrypt
+chown openldap:letsencrypt /etc/letsencrypt/ -R
+usermod -a -G letsencrypt openldap
+```
+
+Activate services
+
+```ini
+# /etc/default/slapd
+SLAPD_SERVICES="ldap:/// ldapi:/// ldaps:///"
+```
+
+Nun informieren wir OpenLDAP wo es die Letsencrypt Certs finden kann.
+
+```ini
+# add_ssl.ldif
+dn: cn=config
+changetype: modify
+add: olcTLSCipherSuite
+olcTLSCipherSuite: NORMAL
+-
+add: olcTLSCRLCheck
+olcTLSCRLCheck: none
+-
+add: olcTLSVerifyClient
+olcTLSVerifyClient: never
+-
+add: olcTLSCACertificateFile
+olcTLSCACertificateFile: /etc/letsencrypt/live/mail.zzeroo.org/fullchain.pem
+-
+add: olcTLSCertificateFile
+olcTLSCertificateFile: /etc/letsencrypt/live/mail.zzeroo.org/cert.pem
+-
+add: olcTLSCertificateKeyFile
+olcTLSCertificateKeyFile: /etc/letsencrypt/live/mail.zzeroo.org/privkey.pem
+-
+add: olcTLSProtocolMin
+olcTLSProtocolMin: 3.3
+```
+
+```bash
+ldapmodify -Y EXTERNAL -H ldapi:/// -f add_ssl.ldif
+```
+
+Nun noch ldap neu starten und den status checken
+
+```bash
+systemctl restart slapd.service
+systemctl status slapd.service
+```
+
+# Postfix Schema
+
+> Nicht funktional
+
+[https://www.vennedey.net/resources/2-LDAP-managed-mail-server-with-Postfix-and-Dovecot-for-multiple-domains](https://www.vennedey.net/resources/2-LDAP-managed-mail-server-with-Postfix-and-Dovecot-for-multiple-domains)
+
+```bash
+wget -O postfix.ldif https://raw.githubusercontent.com/68b32/postfix-ldap-schema/master/postfix.ldif
+ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// -f postfix.ldif
+```
+
+----
 
 # Links
 

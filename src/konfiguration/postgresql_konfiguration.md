@@ -2,14 +2,6 @@
 
 SOGo benötigt eine relationale Datenbank um Einladungen, Aufgaben und Kontakte zu speichern. Außerdem wird die Datenbank auch zum Speichern der persönlichen Einstellungen der SOGo Benutzer genutzt.
 
-```conf
-# /etc/sogo/sogo.conf
-
-  SOGoProfileURL = "postgresql://sogo:sogo@localhost:5432/sogo/sogo_user_profile";
-  OCSFolderInfoURL = "postgresql://sogo:sogo@localhost:5432/sogo/sogo_folder_info";
-  OCSSessionsFolderURL = "postgresql://sogo:sogo@localhost:5432/sogo/sogo_sessions_folder"; 
-```
-
 ## Postgres Role "sogo" anlegen
 
 Zunächst wird der postgres Benutzer aufgerufen. Der zweite Befehl legt dann eine so genannte Rolle mit dem Namen "sogo" an. Der Befehl fragt nach einem Password für diese Rolle, hier muss auch "sogo" eingegeben werden (Oder das Password muss in der sogo.conf angepasst werden.). 
@@ -35,4 +27,11 @@ Die [SOGo Anleitung](https://sogo.nu/files/docs/SOGoInstallationGuide.html) bitt
 ```conf
 # BEGIN der Datei /etc/postgresql/9.6/main/pg_hba.conf 
 host   sogo   sogo     127.0.0.1/32     md5
+```
+
+Zum Abschluss wird postgres neu gestartet und dessen Status geprüft.
+
+```bash
+systemctl restart postgresql
+systemctl status postgresql
 ```
