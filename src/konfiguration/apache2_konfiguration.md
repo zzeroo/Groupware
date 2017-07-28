@@ -28,56 +28,27 @@ echo "<a href=\"https://mail.zzeroo.org/SOGo\">mail.zzeroo.org</a>">/var/www/htm
 > Prüfe das der Rechner einen gültigen DNS A Record hat!
 
 ```bash
-certbot --apache -d mail.zzeroo.org -d sogo.zzeroo.org -d imap.zzeroo.org -d smtp.zzeroo.org -d mx.zzeroo.org
+certbot --apache --agree-tos -m co@zzeroo.com \
+    -d mail.zzeroo.org \
+    -d sogo.zzeroo.org \
+    -d imap.zzeroo.org \
+    -d smtp.zzeroo.org \
+    -d mx.zzeroo.org
 ```
 
-## certbot Renew Tasks via systemd
 
-* [https://wiki.archlinux.org/index.php/Let%E2%80%99s_Encrypt#systemd](https://wiki.archlinux.org/index.php/Let%E2%80%99s_Encrypt#systemd)
+## Automatische Erneuerung via systemd Unit/ Task
 
-### systemd certbot Update Service
-
-```ini
-# /etc/systemd/system/certbot.service
-[Unit]
-Description=Let's Encrypt renewal
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/certbot renew --quiet --agree-tos
-ExecStartPost=/bin/systemctl reload apache2.service
-```
-
-### systemd certbot Update Timer
-
-```ini
-# /etc/systemd/system/certbot.timer
-[Unit]
-Description=Twice daily renewal of Let's Encrypt's certificates
-
-[Timer]
-OnCalendar=0/12:00:00
-RandomizedDelaySec=1h
-Persistent=true
-
-[Install]
-WantedBy=timers.target
-```
-
-### Teste den Update Service
+Die aktuelle `certbot` Installation installiert und aktiviert alle nötigen systemd Komponenten.
 
 ```bash
-systemctl restart certbot.service
 systemctl status certbot.service
 ```
 
-### Aktiviere und starte den Update Timer
-
 ```bash
-systemctl enable certbot.timer
-systemctl start certbot.timer
 systemctl status certbot.timer
 ```
+
 
 
 # Links

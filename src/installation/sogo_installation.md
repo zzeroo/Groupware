@@ -3,9 +3,7 @@
 ## GPG Key importieren
 
 ```bash
-apt install dirmngr
 apt-key adv --keyserver keys.gnupg.net --recv-key 0x810273C4
-apt update
 ```
 
 ## https Transport für Apt
@@ -17,7 +15,11 @@ apt install apt-transport-https
 ## Apt Sources
 
 ```bash
-echo "deb http://packages.inverse.ca/SOGo/nightly/3/debian/ jessie jessie" | sudo tee /etc/apt/sources.list.d/sogo.list
+echo "deb http://packages.inverse.ca/SOGo/nightly/3/debian/ stretch stretch" | tee /etc/apt/sources.list.d/sogo.list
+```
+
+```bash
+apt update
 ```
 
 ## SOGo installation
@@ -25,7 +27,6 @@ echo "deb http://packages.inverse.ca/SOGo/nightly/3/debian/ jessie jessie" | sud
 Nachdem nun alle Vorbereitungen erledigt sind, kann SOGo installiert werden.
 
 ```bash
-apt update
 apt install sogo
 ```
 

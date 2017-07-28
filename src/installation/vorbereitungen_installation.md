@@ -1,22 +1,21 @@
 # Vorbereitungen Installation
 
-Als Erstes muss apt aktualisiert werden.
+Wir verwenden die `testing` Repos von Debian.
+
+```bash
+echo "deb http://cdn-aws.deb.debian.org/debian testing main contrib non-free" | tee /etc/apt/sources.list
+```
 
 ```bash
 apt update
-apt upgrade
+apt dist-upgrade
+apt autoremove
 ```
 
 # Hostname setzen
 
 ```bash
-# /etc/hostname
-mail.zzeroo.org
-```
-
-```bash
-# /etc/hosts
-127.0.0.1   mail.zzeroo.org   mail
+echo "mail.zzeroo.org" | tee /etc/hostname
 ```
 
 # Installation Tools
@@ -36,7 +35,7 @@ apt install fish
 
 ```bash
 chsh -s /usr/bin/fish
-# RELOGIN
+fish
 ```
 
 ## Vim mit spf13 Addons
@@ -62,7 +61,7 @@ curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
 ```
 
 ```bash
-echo "set -gx PATH "$HOME/.cargo/bin" $PATH;" >>.config/fish/config.fish
+echo "set PATH "\$HOME/.cargo/bin" \$PATH;" >>.config/fish/config.fish
 source .config/fish/config.fish
 ```
 
@@ -88,6 +87,18 @@ apt install ntp
 dpkg-reconfigure tzdata
 ```
 
+## Fail2ban
+
+Server sichern, siehe [https://www.thomas-krenn.com/de/wiki/SSH_Login_unter_Debian_mit_fail2ban_absichern](https://www.thomas-krenn.com/de/wiki/SSH_Login_unter_Debian_mit_fail2ban_absichern)
+
+```bash
+apt install fail2ban
+```
+
+```bash
+systemctl restart fail2ban
+systemctl status fail2ban
+```
 
 ## Firewall konfiguration
 
@@ -97,13 +108,20 @@ Folgende Ports sollen von außen erreichbar sein
 |---|---:|---|
 |TCP|22|ssh|
 |TCP|25|smtp|
-|TCP|465|smtps|
+|TCP|587|smtps|
+|TCP|465|smtps.old|
 |TCP|80|http|
 |TCP|443|https|
 |TCP|110|pop3|
 |TCP|995|pops|
 |TCP|143|imap|
-|TCP|993|imaps|
-|TCP|587|ldaps|
+|TCP|636|ldaps|
+|TCP|993|imap TLS|
 
 
+# Neustart
+
+
+```bash
+reboot
+```

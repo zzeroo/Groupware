@@ -2,6 +2,10 @@
 
 Quelle dieser Konfiguration ist der [SOGo Installation and Configuration Guide][sogo-installation-guide].
 
+SOGo nutzt die GNUstep Umgebung zur Konfiguration.
+
+Die Einstellungsdatei ist unter `/etc/sogo/sogo.conf` zu finden. Dies ist eine Textdatei die mit einem beliebigen Editor bearbeitet werden kann.
+
 ## SOGo Datenbank Anbindung
 
 ```conf
@@ -86,5 +90,32 @@ Auf einer Debian Jessie Installation musste die Apache2 SOGo Konfig von Hand akt
 a2enconf SOGo
 systemctl reload apache2
 ```
+
+
+----
+
+# Tipp's
+
+```
+Am 19.07.2017 um 13:39 schrieb Marko Weber | 8000 (weber@zbfmail.de):
+>
+> hello list!,
+>
+> i want to ask if it is possible to have "ONE" global addressbook in sogo
+> for multiple added domains?
+> so when sogo is running for     domone.de , domtwo.de , domthree.de <-
+> can they use together one global addressbook?
+>
+> thanks for any help and hints...
+>
+
+Yes, you can use one SOGoUserSources entry for the address book and one
+for the authentication part.
+The address book has "isAddressBook = YES;" and "canAuthenticate = NO;".
+The authentication one has "isAddressBook = NO;" and "canAuthenticate =
+YES;".
+```
+
+
 
 [sogo-installation-guide]: https://sogo.nu/files/docs/SOGoInstallationGuide.html
