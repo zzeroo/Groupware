@@ -124,7 +124,7 @@ ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// -f users.ldif
 Die Passworte (Parameter `-s`) können jederzeit und immer wieder geändert werden. Wird der Parameter `-s` weg gelassen dann wird ein zufälliges Passwort vergeben.
 
 ```bash
-ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=smueller,ou=people,dc=zzeroo,dc=org -s ***REMOVED***
+ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=smueller,ou=people,dc=zzeroo,dc=org -s $PASSWORD
 ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=hkliemann,ou=people,dc=zzeroo,dc=org -s kliemann
 ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=ikaltenbach,ou=people,dc=zzeroo,dc=org -s kaltenbach
 ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=kkeilhofer,ou=people,dc=zzeroo,dc=org -s keilhofer

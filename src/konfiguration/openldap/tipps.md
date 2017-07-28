@@ -17,7 +17,7 @@ ldapsearch -xLLL -b dc=zzeroo,dc=org
 ```bash
 # ldapwhoami -vvv -h <hostname> -p <port> -D <binddn> -x -w <passwd>
 ldapwhoami -vvv -h localhost -D cn=admin,dc=zzeroo,dc=org -x -w $PASSWORD
-ldapwhoami -vvv -h localhost -D uid=smueller,ou=users,dc=zzeroo,dc=org -x -w ***REMOVED***
+ldapwhoami -vvv -h localhost -D uid=smueller,ou=users,dc=zzeroo,dc=org -x -w $PASSWORD
 ```
 
 ## OpenLDAP log in rsyslog
