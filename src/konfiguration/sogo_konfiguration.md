@@ -30,7 +30,7 @@ Die Einstellungsdatei ist unter `/etc/sogo/sogo.conf` zu finden. Dies ist eine T
       bindFields = (uid, mail); // array of fields to use for indirect binds
       baseDN = "ou=users,dc=zzeroo,dc=org";
       bindDN = "uid=sogo,ou=users,dc=zzeroo,dc=org";
-      bindPassword = ***REMOVED***;
+      bindPassword = $PASSWORD;
       canAuthenticate = YES;
       displayName = "Gemeinsame Adressen";
       hostname = ldap://127.0.0.1:389;

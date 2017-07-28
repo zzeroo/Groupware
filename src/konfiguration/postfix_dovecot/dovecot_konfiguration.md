@@ -35,7 +35,7 @@ auth_mechanisms = plain login
 
 uris = ldap://mail.zzeroo.org
 dn = cn=dovecot,ou=dsa,dc=zzeroo,dc=org
-dnpass = ***REMOVED***
+dnpass = $PASSWORD
 tls = yes
 tls_ca_cert_file = /etc/letsencrypt/live/mail.zzeroo.org/fullchain.pem
 tls_require_cert = demand

@@ -3,7 +3,7 @@
 ## Benutzer Löschen
 
 ```bash
-ldapdelete -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// uid=smueller,ou=users,dc=zzeroo,dc=org
+ldapdelete -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=smueller,ou=users,dc=zzeroo,dc=org
 ```
 
 ## Alle Benutzer auflisten
@@ -16,7 +16,7 @@ ldapsearch -xLLL -b dc=zzeroo,dc=org
 
 ```bash
 # ldapwhoami -vvv -h <hostname> -p <port> -D <binddn> -x -w <passwd>
-ldapwhoami -vvv -h localhost -D cn=admin,dc=zzeroo,dc=org -x -w ***REMOVED***
+ldapwhoami -vvv -h localhost -D cn=admin,dc=zzeroo,dc=org -x -w $PASSWORD
 ldapwhoami -vvv -h localhost -D uid=smueller,ou=users,dc=zzeroo,dc=org -x -w ***REMOVED***
 ```
 
@@ -119,7 +119,7 @@ ldapmodify -Y EXTERNAL -H ldapi:/// -f slapd_config_TLS_enforce.ldif
 
 ```bash
 wget -O postfix.ldif https://raw.githubusercontent.com/68b32/postfix-ldap-schema/master/postfix.ldif
-ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// -f postfix.ldif
+ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// -f postfix.ldif
 ```
 
 # Indexing

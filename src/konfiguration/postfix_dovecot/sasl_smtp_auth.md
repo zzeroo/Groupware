@@ -34,7 +34,7 @@ Erstelle die Datei `/etc/saslauthd.conf`.
 
 ldap_servers: ldap://mail.zzeroo.org:389
 ldap_bind_dn: cn=saslauthd,ou=dsa,dc=zzeroo,dc=org
-ldap_bind_pw: ***REMOVED***
+ldap_bind_pw: $PASSWORD
 ldap_timeout: 10
 ldap_time_limit: 10
 ldap_scope: sub

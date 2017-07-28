@@ -14,7 +14,7 @@ ou: groups
 ```
 
 ```bash
-ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// -f frontend.zzeroo.org.ldif
+ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// -f frontend.zzeroo.org.ldif
 ```
 
 ## SOGo Administrator Account
@@ -36,13 +36,13 @@ givenName: SOGo
 ```
 
 ```bash
-ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// -f sogo-admin.ldif
+ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// -f sogo-admin.ldif
 ```
 
 Password des Benutzers setzen
 
 ```bash
-ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// uid=sogo,ou=people,dc=zzeroo,dc=org -s ***REMOVED***
+ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=sogo,ou=people,dc=zzeroo,dc=org -s $PASSWORD
 ```
 
 ## Benutzer anlegen
@@ -115,7 +115,7 @@ givenName: Dennis
 Anschließend wird die `users.ldif` eingelesen.
 
 ```bash
-ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// -f users.ldif
+ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// -f users.ldif
 ```
 
 
@@ -124,9 +124,9 @@ ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// -f users.ldi
 Die Passworte (Parameter `-s`) können jederzeit und immer wieder geändert werden. Wird der Parameter `-s` weg gelassen dann wird ein zufälliges Passwort vergeben.
 
 ```bash
-ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// uid=smueller,ou=people,dc=zzeroo,dc=org -s ***REMOVED***
-ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// uid=hkliemann,ou=people,dc=zzeroo,dc=org -s kliemann
-ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// uid=ikaltenbach,ou=people,dc=zzeroo,dc=org -s kaltenbach
-ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// uid=kkeilhofer,ou=people,dc=zzeroo,dc=org -s keilhofer
-ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w ***REMOVED*** -H ldap:// uid=dpfeiffer,ou=people,dc=zzeroo,dc=org -s pfeiffer
+ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=smueller,ou=people,dc=zzeroo,dc=org -s ***REMOVED***
+ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=hkliemann,ou=people,dc=zzeroo,dc=org -s kliemann
+ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=ikaltenbach,ou=people,dc=zzeroo,dc=org -s kaltenbach
+ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=kkeilhofer,ou=people,dc=zzeroo,dc=org -s keilhofer
+ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=dpfeiffer,ou=people,dc=zzeroo,dc=org -s pfeiffer
 ```

@@ -105,7 +105,7 @@ serversonfire.de    OK
 
 bind = yes
 bind_dn = cn=postfix,ou=dsa,dc=zzeroo,dc=org
-bind_pw = ***REMOVED***
+bind_pw = $PASSWORD
 server_host = ldap://mail.zzeroo.org:389
 search_base = ou=users,dc=zzeroo,dc=org
 domain = zzeroo.org
@@ -122,7 +122,7 @@ Virtuelle Aliase vorbereiten ...
 
 bind = yes
 bind_dn = cn=postfix,ou=dsa,dc=zzeroo,dc=org
-bind_pw = ***REMOVED***
+bind_pw = $PASSWORD
 server_host = ldap://mail.zzeroo.org:389
 search_base = ou=alias,dc=zzeroo,dc=org
 domain = zzeroo.org

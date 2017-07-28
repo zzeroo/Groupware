@@ -60,7 +60,7 @@ systemctl status slapd.service
 Testen
 
 ```bash
-ldapsearch -x -D "cn=admin,dc=zzeroo,dc=org" -w "secret" -H ldaps://mail.zzeroo.org/ -b dc=zzeroo,dc=org -w ***REMOVED***
+ldapsearch -x -D "cn=admin,dc=zzeroo,dc=org" -w "secret" -H ldaps://mail.zzeroo.org/ -b dc=zzeroo,dc=org -w $PASSWORD
 ```
 
 
