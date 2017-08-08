@@ -90,3 +90,5 @@ usermod -a -G letsencrypt openldap
 ```
 
 
+
+ldapsearch -D "cn=saslauthd,ou=dsa,dc=zzeroo,dc=org" -w hackthor -H ldap://mail.zzeroo.org -b "ou=people,dc=zzeroo,dc=org" ¨CZZ

@@ -5,8 +5,7 @@ Dieses Plugin wird für die so genannten "Directory Service Accounts" für admin
 * [https://documentation.fusiondirectory.org/en/documentation/plugin/dsa_plugin/how_to_setup_dsa_plugin](https://documentation.fusiondirectory.org/en/documentation/plugin/dsa_plugin/how_to_setup_dsa_plugin)
 
 ```bash
-apt install fusiondirectory-plugin-dsa
-apt install fusiondirectory-plugin-dsa-schema
+apt install fusiondirectory-plugin-dsa fusiondirectory-plugin-dsa-schema
 ```
 
 ```bash

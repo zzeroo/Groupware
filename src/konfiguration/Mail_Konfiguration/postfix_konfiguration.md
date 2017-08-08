@@ -1,6 +1,6 @@
 # Postfix/ Dovecot Konfiguration
 
-Im Fusion Directory muss im DSA Plugin ein Service Account "saslauthd" angelegt werden.
+Im Fusion Directory muss im DSA Plugin ein DSA (Domain Service Account) "postfix" angelegt werden.
 
 [![](./images/fd-dsa-postfix-01.png)](./images/fd-dsa-postfix-01.png)
 [![](./images/fd-dsa-postfix-02.png)](./images/fd-dsa-postfix-02.png)
@@ -14,6 +14,7 @@ Da wir die Komplette Konfig überschreiben beginnen wir mit einer kompletten `ma
 
 ```bash
 # /etc/postfix/main.cf
+
 smtpd_banner = $myhostname ESMTP $mail_name
 biff = no
 append_dot_mydomain = no
@@ -50,7 +51,7 @@ myhostname = mail.zzeroo.org
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 myorigin = /etc/mailname
-mydestination = $myhostname, mail.zzeroo.org, localhost.localdomain, localhost
+mydestination = localhost.localdomain, localhost
 relayhost =
 mailbox_size_limit = 0
 recipient_delimiter = +
@@ -59,7 +60,6 @@ inet_protocols = all
 local_transport = local
 postscreen_greet_action = enforce
 smtpd_recipient_restrictions =
-    reject
     permit_mynetworks
     permit_sasl_authenticated
     warn_if_reject reject_non_fqdn_hostname
@@ -89,16 +89,45 @@ smtpd_helo_required = yes
 smtpd_delay_reject = no
 smtpd_client_restrictions = check_client_access cidr:/etc/postfix/drop.cidr
 message_size_limit = 51200000
+
+virtual_transport = dovecot
+dovecot_destination_recipient_limit = 1
+
+virtual_mailbox_domains = zzeroo.org
+virtual_mailbox_maps = hash:/etc/postfix/vmailbox
+virtual_alias_maps = hash:/etc/postfix/virtual
 ```
 
 ```conf
-# /etc/postfix/virtual_domains
+# /etc/postfix/vmailbox
 
 # Domain                Anything
-zzeroo.org          OK
-zzeroo.com          OK
-serversonfire.de    OK
+zzeroo.org          whatever
+zzeroo.com          whatever
+serversonfire.de    whatever
 ```
+
+```conf
+# /etc/postfix/virtual
+postmaster@zzeroo.org postmaster
+```
+
+```conf
+postmap /etc/postfix/virtual
+```
+
+```conf
+postmap /etc/postfix/vmailbox
+```
+
+```conf
+systemctl reload postfix
+```
+
+
+
+----
+
 
 ```conf
 # /etc/postfix/ldap_virtual_recipients.cf
@@ -107,7 +136,7 @@ bind = yes
 bind_dn = cn=postfix,ou=dsa,dc=zzeroo,dc=org
 bind_pw = $PASSWORD
 server_host = ldap://mail.zzeroo.org:389
-search_base = ou=users,dc=zzeroo,dc=org
+search_base = ou=people,dc=zzeroo,dc=org
 domain = zzeroo.org
 query_filter = (mail=%s)
 result_attribute = mail
@@ -173,7 +202,7 @@ Auf welche Ports Postfix hört kann mit folgendem Befehl geprüft werden
 ss -lnptu | grep master
 ```
 
-## Support für SMTPa Ports 465 und 587 aktivieren
+## Support für SMTPs Ports 465 und 587 aktivieren
 
 Dazu die Datei `/etc/postfix/master.cf` editieren und die beiden folgenden Zeilen entkommentieren.
 

@@ -17,36 +17,3 @@ apt install fusiondirectory-plugin-mail fusiondirectory-plugin-mail-schema
 fusiondirectory-insert-schema -i /etc/ldap/schema/fusiondirectory/mail-fd.schema
 fusiondirectory-insert-schema -i /etc/ldap/schema/fusiondirectory/mail-fd-conf.schema
 ```
-
-## Alias
-
-```bash
-apt install fusiondirectory-plugin-alias fusiondirectory-plugin-alias-schema
-```
-
-```bash
-fusiondirectory-insert-schema -i /etc/ldap/schema/fusiondirectory/alias-fd-conf.schema
-fusiondirectory-insert-schema -i /etc/ldap/schema/fusiondirectory/alias-fd.schema
-```
-
-## Postfix
-
-```bash
-apt install fusiondirectory-plugin-postfix fusiondirectory-plugin-postfix-schema
-```
-
-```bash
-fusiondirectory-insert-schema -i /etc/ldap/schema/fusiondirectory/postfix-fd.schema
-```
-
-
-----
-
-```bash
-apt install fusiondirectory-plugin-dovecot
-apt install fusiondirectory-plugin-dovecot-schema
-```
-
-```bash
-fusiondirectory-insert-schema -i /etc/ldap/schema/fusiondirectory/dovecot-fd.schema 
-```

@@ -2,12 +2,14 @@
 
 Quelle dieser Anleitung: [https://www.theo-andreou.org/?p=1568#comment-10434](https://www.theo-andreou.org/?p=1568#comment-10434)
 
-Im Fusion Directory muss im DSA Plugin ein Service Account "saslauthd" angelegt werden.
+Im Fusion Directory muss im DSA Plugin ein DSA (Domain Service Account) "saslauthd" angelegt werden.
 
 [![](./images/fd-dsa-saslauthd-01.png)](./images/fd-dsa-saslauthd-01.png)
 [![](./images/fd-dsa-saslauthd-02.png)](./images/fd-dsa-saslauthd-02.png)
 [![](./images/fd-dsa-saslauthd-03.png)](./images/fd-dsa-saslauthd-03.png)
 
+
+Beginnen wir mit dem Anlegen der Datei `/etc/postfix/sasl/smtpd.conf`.
 
 ```ini
 # /etc/postfix/sasl/smtpd.conf
@@ -17,7 +19,7 @@ pwcheck_method: saslauthd
 mech_list: PLAIN LOGIN
 ```
 
-Ersetze folgende Zeilen in `/etc/default/saslauthd`
+Ersetze danach folgende Zeilen in `/etc/default/saslauthd`.
 
 ```ini
 # /etc/default/saslauthd
@@ -27,7 +29,7 @@ MECHANISMS="ldap"
 OPTIONS="-c -m /var/spool/postfix/var/run/saslauthd"
 ```
 
-Erstelle die Datei `/etc/saslauthd.conf`.
+Und erstelle die Datei `/etc/saslauthd.conf`.
 
 ```ini
 # /etc/saslauthd.conf 
@@ -38,7 +40,7 @@ ldap_bind_pw: $PASSWORD
 ldap_timeout: 10
 ldap_time_limit: 10
 ldap_scope: sub
-ldap_search_base: ou=users,dc=zzeroo,dc=org
+ldap_search_base: ou=people,dc=zzeroo,dc=org
 ldap_auth_method: bind
 ldap_filter: (&(uid=%u)(mail=*))
 ldap_debug: 0
@@ -48,13 +50,13 @@ ldap_starttls: no
 ldap_referrals: yes
 ```
 
-Postfix User in die Gruppe `sasl` einfügen
+Den Postfix User in die Gruppe `sasl` einfügen.
 
 ```bash
 usermod -aG sasl postfix
 ```
 
-Folgende Attribute in die Datei `/etc/postfix/main.cf` einfügen
+Und folgende Attribute in die Datei `/etc/postfix/main.cf` einfügen.
 
 ```ini
 # /etc/postfix/main.cf

@@ -41,7 +41,7 @@ Im Oberen Teil der Konfiguration, unter "SSL" werden die letsencrypt Zertifikatp
 
 [![](../images/fusiondirectory-konfiguration-05.png)](../images/fusiondirectory-konfiguration-05.png)
 
-Der "Users RDN" muss nach `ou=users` geändert werden.
+Der "Users RDN" muss nach `ou=people` geändert werden.
 
 [![](../images/fusiondirectory-konfiguration-06.png)](../images/fusiondirectory-konfiguration-06.png)
 

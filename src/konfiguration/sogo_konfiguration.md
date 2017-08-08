@@ -13,7 +13,7 @@ Die Einstellungsdatei ist unter `/etc/sogo/sogo.conf` zu finden. Dies ist eine T
 
   SOGoProfileURL = "postgresql://sogo:sogo@localhost:5432/sogo/sogo_user_profile";
   OCSFolderInfoURL = "postgresql://sogo:sogo@localhost:5432/sogo/sogo_folder_info";
-  OCSSessionsFolderURL = "postgresql://sogo:sogo@localhost:5432/sogo/sogo_sessions_folder"; 
+  OCSSessionsFolderURL = "postgresql://sogo:sogo@localhost:5432/sogo/sogo_sessions_folder";
 ```
 
 ## SOGo User Sources
@@ -28,17 +28,23 @@ Die Einstellungsdatei ist unter `/etc/sogo/sogo.conf` zu finden. Dies ist eine T
       UIDFieldName = uid;
       IDFieldName = uid; // first field of the DN for direct binds
       bindFields = (uid, mail); // array of fields to use for indirect binds
-      baseDN = "ou=users,dc=zzeroo,dc=org";
-      bindDN = "uid=sogo,ou=users,dc=zzeroo,dc=org";
+      baseDN = "ou=people,dc=zzeroo,dc=org";
+      bindDN = "uid=sogo,ou=people,dc=zzeroo,dc=org";
       bindPassword = $PASSWORD;
       canAuthenticate = YES;
-      displayName = "Gemeinsame Adressen";
+      displayName = "Mitarbeiter";
       hostname = ldap://127.0.0.1:389;
       id = public;
       isAddressBook = YES;
     }
   );
 ```
+
+# Apache2
+
+RequestHeader set "x-webobjects-server-port" "443"
+RequestHeader set "x-webobjects-server-name" "sogo"
+RequestHeader set "x-webobjects-server-url" "https://sogo.domain.com" [^]
 
 # Microsoft Enterprise ActiveSync
 

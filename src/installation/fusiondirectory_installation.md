@@ -49,5 +49,5 @@ apt install fusiondirectory-schema
 Danach folgt die Installation des Fusion Directory Software Stacks.
 
 ```bash
-apt install fusiondirectory php-mdb2
+apt install fusiondirectory php-mdb2 php-mbstring
 ```

@@ -2,7 +2,7 @@
 
 Quelle dieser Anleitung: [https://www.theo-andreou.org/?p=1568#comment-10434](https://www.theo-andreou.org/?p=1568#comment-10434)
 
-Im Fusion Directory muss im DSA Plugin ein Service Account "dovecot" angelegt werden.
+Im Fusion Directory muss im DSA Plugin ein DSA (Domain Service Account) "dovecot" angelegt werden.
 
 [![](./images/fd-dsa-dovecot-01.png)](./images/fd-dsa-dovecot-01.png)
 [![](./images/fd-dsa-dovecot-02.png)](./images/fd-dsa-dovecot-02.png)
@@ -33,17 +33,17 @@ auth_mechanisms = plain login
 ```ini
 # /etc/dovecot/dovecot-ldap.conf.ext
 
-uris = ldap://mail.zzeroo.org
+uris = ldap://mail.zzeroo.org:389
 dn = cn=dovecot,ou=dsa,dc=zzeroo,dc=org
 dnpass = $PASSWORD
 tls = yes
-tls_ca_cert_file = /etc/letsencrypt/live/mail.zzeroo.org/fullchain.pem
+tls_ca_cert_file = /etc/ssl/certs/ca-certificates.crt
 tls_require_cert = demand
 ldap_version = 3
-base = ou=users,dc=zzeroo,dc=org
+base = ou=people,dc=zzeroo,dc=org
 user_attrs = =mail=maildir:/srv/vmail/%{ldap:mail}/Maildir
-user_filter = (&(objectClass=gosaMailAccount)(uid=%n))
 pass_attrs = uid=user,userPassword=password
+user_filter = (&(objectClass=gosaMailAccount)(uid=%n))
 pass_filter = (&(objectClass=gosaMailAccount)(uid=%n))
 default_pass_scheme = SSHA
 ```
@@ -71,8 +71,8 @@ Folgende Zeilen eintragen. Der User (vmail) mit der UserID 5000 wird gleich erst
 # /etc/dovecot/conf.d/10-mail.conf
 
 mail_uid = 5000
-mail_uid = 5000
-``
+mail_gid = 5000
+```
 
 ## Dienste Konfigurieren
 
@@ -177,6 +177,25 @@ dovecot_destination_recipient_limit = 1
 
 
 ```bash
-systemctl restart dovecot
-systemctl status dovecot
+systemctl restart dovecot postfix
+systemctl status dovecot postfix
 ```
+
+
+----
+
+# TOPP
+
+## Authentication Testen
+
+```bash
+doveadm auth test <USER1>@<HOSTNAME>
+```
+
+## List IMAP Folders
+
+```bash
+doveadm mailbox list -u <USER1>@<HOSTNAME>
+```
+
+
