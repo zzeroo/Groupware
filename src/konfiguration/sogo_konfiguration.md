@@ -40,11 +40,15 @@ Die Einstellungsdatei ist unter `/etc/sogo/sogo.conf` zu finden. Dies ist eine T
   );
 ```
 
-# Apache2
+# Apache2 Konfiguration
 
+> **TODO**: Die Apache Konfigurationsdateien checken, `/etc/apache2/conf.d/SOGo.conf` und `/etc/apache2/conf-available/SOGo.conf`
+
+```conf
 RequestHeader set "x-webobjects-server-port" "443"
 RequestHeader set "x-webobjects-server-name" "sogo"
 RequestHeader set "x-webobjects-server-url" "https://sogo.domain.com" [^]
+```
 
 # Microsoft Enterprise ActiveSync
 
