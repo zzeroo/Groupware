@@ -34,7 +34,7 @@ Und erstelle die Datei `/etc/saslauthd.conf`.
 ```ini
 # /etc/saslauthd.conf 
 
-ldap_servers: ldap://mail.zzeroo.org:389
+ldap_servers: ldap://mail.ra-gas.de:389
 ldap_bind_dn: cn=saslauthd,ou=dsa,dc=zzeroo,dc=org
 ldap_bind_pw: $PASSWORD
 ldap_timeout: 10
@@ -81,7 +81,7 @@ apt install swaks
 ```
 
 ```bash
-swaks --from noreply@zzeroo.org --to s.mueller@zzeroo.org --server 127.0.0.1:25 --tls --auth plain --auth-user=smueller
+swaks --from noreply@ra-gas.de --to s.mueller@ra-gas.de --server 127.0.0.1:25 --tls --auth plain --auth-user=smueller
 ```
 
 

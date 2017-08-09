@@ -14,8 +14,8 @@ Im Fusion Directory muss im DSA Plugin ein DSA (Domain Service Account) "dovecot
 # /etc/dovecot/conf.d/10-ssl.conf 
 ssl = required
 
-ssl_cert = </etc/letsencrypt/live/mail.zzeroo.org/cert.pem
-ssl_key = </etc/letsencrypt/live/mail.zzeroo.org/privkey.pem
+ssl_cert = </etc/letsencrypt/live/mail.ra-gas.de/cert.pem
+ssl_key = </etc/letsencrypt/live/mail.ra-gas.de/privkey.pem
 ```
 
 ## Authentication 
@@ -33,7 +33,7 @@ auth_mechanisms = plain login
 ```ini
 # /etc/dovecot/dovecot-ldap.conf.ext
 
-uris = ldap://mail.zzeroo.org:389
+uris = ldap://mail.ra-gas.de:389
 dn = cn=dovecot,ou=dsa,dc=zzeroo,dc=org
 dnpass = $PASSWORD
 tls = yes

@@ -18,7 +18,7 @@ ufw allow 443
 Die default index.html sollte mit custom content überschrieben werden. Sieht einfach professioneller aus als die Default Debian "Wie konfiguriere ich Apache2?" Webseite.
 
 ```bash
-echo "<a href=\"https://mail.zzeroo.org/SOGo\">mail.zzeroo.org</a>">/var/www/html/index.html
+echo "<a href=\"https://mail.ra-gas.de/SOGo\">mail.ra-gas.de</a>">/var/www/html/index.html
 ```
 
 
@@ -29,11 +29,11 @@ echo "<a href=\"https://mail.zzeroo.org/SOGo\">mail.zzeroo.org</a>">/var/www/htm
 
 ```bash
 certbot --apache --agree-tos -m co@zzeroo.com \
-    -d mail.zzeroo.org \
-    -d sogo.zzeroo.org \
-    -d imap.zzeroo.org \
-    -d smtp.zzeroo.org \
-    -d mx.zzeroo.org
+    -d mail.ra-gas.de \
+    -d sogo.ra-gas.de \
+    -d imap.ra-gas.de \
+    -d smtp.ra-gas.de \
+    -d mx.ra-gas.de
 ```
 
 

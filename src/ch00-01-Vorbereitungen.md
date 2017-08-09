@@ -21,7 +21,7 @@ apt autoremove
 Der Hostname des Systems muss gesetzt werden. Dieser Wert wird von vielen Konfig Tools ausgelesen.
 
 ```bash
-echo "mail.zzeroo.org" | tee /etc/hostname
+echo "mail.ra-gas.de" | tee /etc/hostname
 ```
 
 # Zeit

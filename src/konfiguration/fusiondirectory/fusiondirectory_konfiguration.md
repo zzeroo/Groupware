@@ -1,6 +1,6 @@
 # Fusion Directory Konfiguration
 
-* [http://mail.zzeroo.org/fusiondirectory](http://mail.zzeroo.org/fusiondirectory)
+* [http://mail.ra-gas.de/fusiondirectory](http://mail.ra-gas.de/fusiondirectory)
 * [https://documentation.fusiondirectory.org/en/documentation/admin_installation/core_installation](https://documentation.fusiondirectory.org/en/documentation/admin_installation/core_installation)
 
 ## Fusion Directory Schema Integration
@@ -19,7 +19,7 @@ fusiondirectory-insert-schema -l
 
 ## Fusion Directory Konfiguration via Webinterface
 
-Anschließend die URL [https://mail.zzeroo.org/fusiondirectory](https://mail.zzeroo.org/fusiondirectory) aufrufen und den Anweisungen folge leisten.
+Anschließend die URL [https://mail.ra-gas.de/fusiondirectory](https://mail.ra-gas.de/fusiondirectory) aufrufen und den Anweisungen folge leisten.
 
 Zu Begin muss eine Text Datei mit einem Hash auf dem Server erstellt werden.
 
@@ -72,7 +72,7 @@ und z.B. in Downloads speichern.
 Nun die Konfigurationsdatei via SCP übertragen.
 
 ```bash
-scp Downloads/fusiondirectory.conf mail.zzeroo.org:/tmp/
+scp Downloads/fusiondirectory.conf mail.ra-gas.de:/tmp/
 ```
 
 > Achtung, Wechsel auf LDAP Server!

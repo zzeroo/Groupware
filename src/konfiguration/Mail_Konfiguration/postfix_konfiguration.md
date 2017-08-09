@@ -19,8 +19,8 @@ smtpd_banner = $myhostname ESMTP $mail_name
 biff = no
 append_dot_mydomain = no
 readme_directory = no
-smtpd_tls_cert_file=/etc/letsencrypt/live/mail.zzeroo.org/cert.pem
-smtpd_tls_key_file=/etc/letsencrypt/live/mail.zzeroo.org/privkey.pem
+smtpd_tls_cert_file=/etc/letsencrypt/live/mail.ra-gas.de/cert.pem
+smtpd_tls_key_file=/etc/letsencrypt/live/mail.ra-gas.de/privkey.pem
 smtpd_use_tls=yes
 smtpd_tls_security_level = may
 smtpd_tls_auth_only = yes
@@ -47,7 +47,7 @@ smtpd_tls_exclude_ciphers =
     aECDH
     EDH-DSS-DES-CBC3-SHA
     KRB5-DES-CBC3-SHA
-myhostname = mail.zzeroo.org
+myhostname = mail.ra-gas.de
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 myorigin = /etc/mailname
@@ -93,7 +93,7 @@ message_size_limit = 51200000
 virtual_transport = dovecot
 dovecot_destination_recipient_limit = 1
 
-virtual_mailbox_domains = zzeroo.org
+virtual_mailbox_domains = ra-gas.de
 virtual_mailbox_maps = hash:/etc/postfix/vmailbox
 virtual_alias_maps = hash:/etc/postfix/virtual
 ```
@@ -102,14 +102,14 @@ virtual_alias_maps = hash:/etc/postfix/virtual
 # /etc/postfix/vmailbox
 
 # Domain                Anything
-zzeroo.org          whatever
+ra-gas.de          whatever
 zzeroo.com          whatever
 serversonfire.de    whatever
 ```
 
 ```conf
 # /etc/postfix/virtual
-postmaster@zzeroo.org postmaster
+postmaster@ra-gas.de postmaster
 ```
 
 ```conf
@@ -135,9 +135,9 @@ systemctl reload postfix
 bind = yes
 bind_dn = cn=postfix,ou=dsa,dc=zzeroo,dc=org
 bind_pw = $PASSWORD
-server_host = ldap://mail.zzeroo.org:389
+server_host = ldap://mail.ra-gas.de:389
 search_base = ou=people,dc=zzeroo,dc=org
-domain = zzeroo.org
+domain = ra-gas.de
 query_filter = (mail=%s)
 result_attribute = mail
 start_tls = yes
@@ -152,9 +152,9 @@ Virtuelle Aliase vorbereiten ...
 bind = yes
 bind_dn = cn=postfix,ou=dsa,dc=zzeroo,dc=org
 bind_pw = $PASSWORD
-server_host = ldap://mail.zzeroo.org:389
+server_host = ldap://mail.ra-gas.de:389
 search_base = ou=alias,dc=zzeroo,dc=org
-domain = zzeroo.org
+domain = ra-gas.de
 query_filter = (mail=%s)
 result_attribute = gosaMailAlternateAddress, gosaMailForwardingAddress
 start_tls = yes
@@ -239,12 +239,12 @@ chmod 600 dh_*
 Test
 
 ```bash
-postmap -q s.mueller@zzeroo.org ldap:/etc/postfix/ldap_virtual_recipients.cf 
+postmap -q s.mueller@ra-gas.de ldap:/etc/postfix/ldap_virtual_recipients.cf 
 ```
 
 der Test sollte folgendes Ergebnis bringen:
 
 ```result
-s.mueller@zzeroo.org
+s.mueller@ra-gas.de
 ```
 

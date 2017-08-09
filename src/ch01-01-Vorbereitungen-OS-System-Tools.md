@@ -1,22 +1,25 @@
-# Vorbereitungen Installation
+# OS, System und Tools
+## Hostname setzen
 
-Wir verwenden die `testing` Repos von Debian.
-
-```bash
-echo "deb http://cdn-aws.deb.debian.org/debian testing main contrib non-free" | tee /etc/apt/sources.list
-```
+Der Hostname des Systems muss gesetzt werden. Dieser Wert wird von vielen Konfig Tools ausgelesen.
 
 ```bash
-apt update
-apt dist-upgrade
-apt autoremove
+echo "mail.ra-gas.de" | tee /etc/hostname
 ```
 
-# Hostname setzen
+## Zeit
+### NTP Installation
 
 ```bash
-echo "mail.zzeroo.org" | tee /etc/hostname
+apt install ntp
 ```
+
+### Zeitzone konfigurieren
+
+```bash
+dpkg-reconfigure tzdata
+```
+
 
 # Installation Tools
 ## Tmux
@@ -53,10 +56,6 @@ curl http://j.mp/spf13-vim3 -L -o - | sh
 Rust ist meine Standardwaffe und darf auf keinen Server mehr fehlen.
 
 ```bash
-apt install build-essential
-```
-
-```bash
 curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
 ```
 
@@ -68,44 +67,22 @@ source .config/fish/config.fish
 Zudem bringt Rust coole Tools hervor. Hier installieren wir 2 von diesen. Sie ersetzen `grep` und `find`.
 
 ```bash
+apt install build-essential
+```
+
+```bash
 # `grep` Erstaz
 cargo install ripgrep
 # `find` Ersatz
 cargo install --git https://github.com/sharkdp/fd
 ```
 
-# Zeit
-## NTP Installation
-
-```bash
-apt install ntp
-```
-
-## Zeitzone konfigurieren
-
-```bash
-dpkg-reconfigure tzdata
-```
-
-## Fail2ban
-
-Server sichern, siehe [https://www.thomas-krenn.com/de/wiki/SSH_Login_unter_Debian_mit_fail2ban_absichern](https://www.thomas-krenn.com/de/wiki/SSH_Login_unter_Debian_mit_fail2ban_absichern)
-
-```bash
-apt install fail2ban
-```
-
-```bash
-systemctl restart fail2ban
-systemctl status fail2ban
-```
-
-
-
-
 # Neustart
-
+Nach dieser Basis Konfiguration wird das System einmal neu gestartet.
 
 ```bash
 reboot
 ```
+
+
+[debian]: http://debian.org/

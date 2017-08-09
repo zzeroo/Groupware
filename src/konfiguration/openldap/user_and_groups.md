@@ -1,9 +1,9 @@
 # Benutzer und Gruppen anlegen
 
-Datei `frontend.zzeroo.org.ldif` anlegen.
+Datei `frontend.ra-gas.de.ldif` anlegen.
 
 ```ini
-# frontend.zzeroo.org.ldif
+# frontend.ra-gas.de.ldif
 dn: ou=people,dc=zzeroo,dc=org
 objectClass: organizationalUnit
 ou: users
@@ -14,7 +14,7 @@ ou: groups
 ```
 
 ```bash
-ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// -f frontend.zzeroo.org.ldif
+ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// -f frontend.ra-gas.de.ldif
 ```
 
 ## SOGo Administrator Account
@@ -30,7 +30,7 @@ objectClass: person
 objectClass: organizationalPerson
 uid: sogo
 cn: SOGo Administrator
-mail: sogo@zzeroo.org
+mail: sogo@ra-gas.de
 sn: Administrator
 givenName: SOGo
 ```
@@ -59,7 +59,7 @@ objectClass: person
 objectClass: organizationalPerson
 uid: smueller
 cn: Stefan Müller
-mail: s.mueller@zzeroo.org
+mail: s.mueller@ra-gas.de
 sn: Mueller
 givenName: Stefan
 
@@ -71,7 +71,7 @@ objectClass: person
 objectClass: organizationalPerson
 uid: hkliemann
 cn: Helge Kliemann
-mail: h.kliemann@zzeroo.org
+mail: h.kliemann@ra-gas.de
 sn: Kliemann
 givenName: Helge
 
@@ -83,7 +83,7 @@ objectClass: person
 objectClass: organizationalPerson
 uid: ikaltenbach
 cn: Ingrid Kaltenbach
-mail: i.kaltenbach@zzeroo.org
+mail: i.kaltenbach@ra-gas.de
 sn: Kaltenbach
 givenName: Ingrid
 
@@ -95,7 +95,7 @@ objectClass: person
 objectClass: organizationalPerson
 uid: kkeilhofer
 cn: Karlheinz Keilhofer
-mail: k.keilhofer@zzeroo.org
+mail: k.keilhofer@ra-gas.de
 sn: Keilhofer
 givenName: Karlheinz
 
@@ -107,7 +107,7 @@ objectClass: person
 objectClass: organizationalPerson
 uid: dpfeiffer
 cn: Dennis Pfeiffer
-mail: d.pfeiffer@zzeroo.org
+mail: d.pfeiffer@ra-gas.de
 sn: Pfeiffer
 givenName: Dennis
 ```

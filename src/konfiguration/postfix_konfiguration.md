@@ -7,7 +7,7 @@ Man kann diese Datei einfach mit einem Editor öffnen, oder noch einfacher, das 
 ## Domain anlegen
 
 ```bash
-postconf -e "mydomain = zzeroo.org"
+postconf -e "mydomain = ra-gas.de"
 postconf -e "myorigin = \$mydomain"
 ```
 
@@ -35,8 +35,8 @@ postconf -e "smtpd_tls_auth_only = no"
 postconf -e "smtpd_use_tls = yes"
 postconf -e "smtp_use_tls = yes"
 postconf -e "smtp_tls_note_starttls_offer = yes"
-postconf -e "smtpd_tls_key_file = /etc/letsencrypt/live/mail.zzeroo.org/privkey.pem"
-postconf -e "smtpd_tls_cert_file = /etc/letsencrypt/live/mail.zzeroo.org/cert.pem"
+postconf -e "smtpd_tls_key_file = /etc/letsencrypt/live/mail.ra-gas.de/privkey.pem"
+postconf -e "smtpd_tls_cert_file = /etc/letsencrypt/live/mail.ra-gas.de/cert.pem"
 postconf -e "smtpd_tls_loglevel = 1"
 postconf -e "smtpd_tls_received_header = yes"
 postconf -e "smtpd_tls_session_cache_timeout = 3600s"
@@ -58,17 +58,17 @@ biff = no
 append_dot_mydomain = no
 readme_directory = no
 compatibility_level = 2
-smtpd_tls_cert_file = /etc/letsencrypt/live/mail.zzeroo.org/cert.pem
-smtpd_tls_key_file = /etc/letsencrypt/live/mail.zzeroo.org/privkey.pem
+smtpd_tls_cert_file = /etc/letsencrypt/live/mail.ra-gas.de/cert.pem
+smtpd_tls_key_file = /etc/letsencrypt/live/mail.ra-gas.de/privkey.pem
 smtpd_use_tls = yes
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
-myhostname = zzeroo.org
+myhostname = ra-gas.de
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 myorigin = $mydomain
-mydestination = $myhostname, mail.zzeroo.org, zzeroo.org, localhost.gaswarnanlagen.lan, localhost
+mydestination = $myhostname, mail.ra-gas.de, ra-gas.de, localhost.gaswarnanlagen.lan, localhost
 relayhost = 
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
 mailbox_command = 
@@ -76,7 +76,7 @@ mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = all
 inet_protocols = all
-mydomain = zzeroo.org
+mydomain = ra-gas.de
 home_mailbox = Maildir/
 smtpd_sasl_type = dovecot
 smtpd_sasl_path = private/auth
@@ -97,8 +97,8 @@ smtpd_tls_session_cache_timeout = 3600s
 # /etc/dovecot/conf.d/10-ssl.conf 
 ssl = required
 
-ssl_cert = </etc/letsencrypt/live/mail.zzeroo.org/cert.pem
-ssl_key = </etc/letsencrypt/live/mail.zzeroo.org/privkey.pem
+ssl_cert = </etc/letsencrypt/live/mail.ra-gas.de/cert.pem
+ssl_key = </etc/letsencrypt/live/mail.ra-gas.de/privkey.pem
 ```
 
 ## Authentication 

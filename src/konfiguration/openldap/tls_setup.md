@@ -34,13 +34,13 @@ add: olcTLSVerifyClient
 olcTLSVerifyClient: never
 -
 add: olcTLSCACertificateFile
-olcTLSCACertificateFile: /etc/letsencrypt/live/mail.zzeroo.org/fullchain.pem
+olcTLSCACertificateFile: /etc/letsencrypt/live/mail.ra-gas.de/fullchain.pem
 -
 add: olcTLSCertificateFile
-olcTLSCertificateFile: /etc/letsencrypt/live/mail.zzeroo.org/cert.pem
+olcTLSCertificateFile: /etc/letsencrypt/live/mail.ra-gas.de/cert.pem
 -
 add: olcTLSCertificateKeyFile
-olcTLSCertificateKeyFile: /etc/letsencrypt/live/mail.zzeroo.org/privkey.pem
+olcTLSCertificateKeyFile: /etc/letsencrypt/live/mail.ra-gas.de/privkey.pem
 -
 add: olcTLSProtocolMin
 olcTLSProtocolMin: 3.3
@@ -60,7 +60,7 @@ systemctl status slapd.service
 Testen
 
 ```bash
-ldapsearch -x -D "cn=admin,dc=zzeroo,dc=org" -w "secret" -H ldaps://mail.zzeroo.org/ -b dc=zzeroo,dc=org -w $PASSWORD
+ldapsearch -x -D "cn=admin,dc=zzeroo,dc=org" -w "secret" -H ldaps://mail.ra-gas.de/ -b dc=zzeroo,dc=org -w $PASSWORD
 ```
 
 
@@ -91,4 +91,4 @@ usermod -a -G letsencrypt openldap
 
 
 
-ldapsearch -D "cn=saslauthd,ou=dsa,dc=zzeroo,dc=org" -w hackthor -H ldap://mail.zzeroo.org -b "ou=people,dc=zzeroo,dc=org" ¨CZZ
+ldapsearch -D "cn=saslauthd,ou=dsa,dc=zzeroo,dc=org" -w hackthor -H ldap://mail.ra-gas.de -b "ou=people,dc=zzeroo,dc=org" ¨CZZ
