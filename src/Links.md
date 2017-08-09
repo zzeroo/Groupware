@@ -12,10 +12,14 @@
 - Postfix
     * [Postfix SASL Howto](http://www.postfix.org/SASL_README.html)
 - Domain und Rootserver
-    * [1und1][login-1und1]
-    * [Amazon AWS/ EC2][login-amazon]
+    * [Login Amazon EC2 Console][login-amazon]
+    * [Login 1und1][login-1und1]
+- Blog Posts
+    - [Blog basic Postfix setup - Debian mailserver with Postfix & Dovecot + Thunderbird demo](https://www.youtube.com/watch?v=WCo7dwtgprg).
 
 
+
+[apache2]: http://httpd.apache.org/
 [blog-postfix-dovecot-fusiondirectory]: https://www.theo-andreou.org/?p=1568#comments
 [blog-postfix-fusiondirectory]: https://thson.de/2017/03/26/kurzreport-fusiondirectory-postfix-mailingliste/
 [certbot-installation]: https://certbot.eff.org/#debiantesting-apache
