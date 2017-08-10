@@ -28,7 +28,7 @@ dpkg-reconfigure tzdata
 apt install tmux
 ```
 
-## Fish Shell
+## [optional] Fish Shell
 
 Ich bevorzuge die fish Shell da diese in der default Konfiguration sehr sinnvolle Features besitzt.
 
@@ -40,6 +40,22 @@ apt install fish
 chsh -s /usr/bin/fish
 fish
 ```
+
+### [optional] Prompt der Fish Shell
+
+Ich verändere an der Fish Shell Installation nichts. Das ist gerade das Tolle an dieser Shell, sie ist per default cool.
+
+Das hat aber den Nachteil das alle Prompt's, auch die via SSH, gleich aussehen. Die bash/zsh/sh Shell haben dafür die Umgebungsvariable `$PS1` (Infos darüber findet das [Netz](https://www.heise.de/ct/hotline/Linux-Bash-Prompt-veraendern-3268603.html)).
+Die Fish Shell nutzt Anstelle von `$PS1` eine Funktion mit dem Namen `fish_prompt`. Hier ist ein Beispiel:
+
+```bash
+# cat ~/.config/fish/config.fish
+function fish_prompt
+  echo -n "hostname.tld" (pwd) '# '
+end
+```
+
+Die Anleitung unter [https://fishshell.com/docs/current/tutorial.html#tut_prompt](https://fishshell.com/docs/current/tutorial.html#tut_prompt) weis mehr darüber.
 
 ## Vim mit spf13 Addons
 
@@ -86,3 +102,7 @@ reboot
 
 
 [debian]: http://debian.org/
+
+
+
+<!-- TODO: Alle Tools in Unterseiten packen. Mit einer Einleitung das die [optional] Punkte ruhig übersprungen werden können. -->

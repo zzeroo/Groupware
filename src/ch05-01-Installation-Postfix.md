@@ -1,4 +1,4 @@
-# Postfix/ Dovecot Installation
+# Installation Postfix
 
 ```bash
 apt install postfix postfix-pcre postfix-ldap
@@ -14,7 +14,7 @@ und der richtige Domainname eingetragen.
 !["Internet Site" wählen](../images/postfix-installation-02.png)
 
 
-# Dovecot Installation
+# Installation Dovecot
 
 ```bash
 apt install dovecot-core dovecot-imapd dovecot-pop3d dovecot-lmtpd dovecot-ldap

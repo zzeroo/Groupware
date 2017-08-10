@@ -4,3 +4,5 @@
 
 
 [openldap]: https://www.openldap.org/
+
+<!-- TODO: Mehr Infos zum Programm/ der Technik erfassen! -->

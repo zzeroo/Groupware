@@ -7,3 +7,5 @@ Die Konfiguration beginnt mit der Apache2 Konfiguration. Danach werden [`letsenc
 
 [apache2]: http://httpd.apache.org/
 [letsencrypt]: https://letsencrypt.org/
+
+<!-- TODO: Mehr Infos zum Programm/ der Technik erfassen! -->
