@@ -2,7 +2,7 @@
 
 Quelle: [https://wiki.dovecot.org/AuthDatabase/LDAP/PasswordLookups#LDAP_server_permissions](https://wiki.dovecot.org/AuthDatabase/LDAP/PasswordLookups#LDAP_server_permissions)
 
-Die foldende ldif löscht den ACL Eintrag `olcAccess: {0}` und erstellt ihn anschließend neu mit der Änderung das der dn "cn=dovecot,ou=dsa,dc=zzeroo,dc=org" lesen darf.
+Die foldende ldif löscht den ACL Eintrag `olcAccess: {0}` und erstellt ihn anschließend neu mit der Änderung das der dn "cn=dovecot,ou=dsa,dc=ra-gas,dc=de" lesen darf.
 
 ```ini
 # dovecot_pass_access.ldif
@@ -14,7 +14,7 @@ olcAccess: {0}to attrs=userPassword by self write by anonymous auth by * none
 -
 add: olcAccess
 olcAccess: {0}to attrs=userPassword
-        by dn="cn=dovecot,ou=dsa,dc=zzeroo,dc=org" read
+        by dn="cn=dovecot,ou=dsa,dc=ra-gas,dc=de" read
         by self write
         by anonymous auth
         by * none

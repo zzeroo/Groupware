@@ -34,13 +34,13 @@ auth_mechanisms = plain login
 # /etc/dovecot/dovecot-ldap.conf.ext
 
 uris = ldap://mail.ra-gas.de:389
-dn = cn=dovecot,ou=dsa,dc=zzeroo,dc=org
+dn = cn=dovecot,ou=dsa,dc=ra-gas,dc=de
 dnpass = $PASSWORD
 tls = yes
 tls_ca_cert_file = /etc/ssl/certs/ca-certificates.crt
 tls_require_cert = demand
 ldap_version = 3
-base = ou=people,dc=zzeroo,dc=org
+base = ou=people,dc=ra-gas,dc=de
 user_attrs = =mail=maildir:/srv/vmail/%{ldap:mail}/Maildir
 pass_attrs = uid=user,userPassword=password
 user_filter = (&(objectClass=gosaMailAccount)(uid=%n))

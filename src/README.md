@@ -27,11 +27,11 @@
 [sogo] ist OpenSource und unter der GNU GPL/LGPL v2 Lizenz veröffentlicht.
 
 
-[openldap]: https://www.openldap.org/
-[fusiondirectory]: http://www.fusiondirectory.org/
-[fusiondirectory-github]: https://github.com/fusiondirectory
 [apache2]: http://httpd.apache.org/
-[letsencrypt]: https://letsencrypt.org/
-[postfix]: http://www.postfix.org/
 [dovecot]: http://www.dovecot.org/
+[fusiondirectory-github]: https://github.com/fusiondirectory
+[fusiondirectory]: http://www.fusiondirectory.org/
+[letsencrypt]: https://letsencrypt.org/
+[openldap]: https://www.openldap.org/
+[postfix]: http://www.postfix.org/
 [sogo]: https://sogo.nu

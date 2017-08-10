@@ -133,10 +133,10 @@ systemctl reload postfix
 # /etc/postfix/ldap_virtual_recipients.cf
 
 bind = yes
-bind_dn = cn=postfix,ou=dsa,dc=zzeroo,dc=org
+bind_dn = cn=postfix,ou=dsa,dc=ra-gas,dc=de
 bind_pw = $PASSWORD
 server_host = ldap://mail.ra-gas.de:389
-search_base = ou=people,dc=zzeroo,dc=org
+search_base = ou=people,dc=ra-gas,dc=de
 domain = ra-gas.de
 query_filter = (mail=%s)
 result_attribute = mail
@@ -150,10 +150,10 @@ Virtuelle Aliase vorbereiten ...
 # /etc/postfix/ldap_virtual_aliases.cf
 
 bind = yes
-bind_dn = cn=postfix,ou=dsa,dc=zzeroo,dc=org
+bind_dn = cn=postfix,ou=dsa,dc=ra-gas,dc=de
 bind_pw = $PASSWORD
 server_host = ldap://mail.ra-gas.de:389
-search_base = ou=alias,dc=zzeroo,dc=org
+search_base = ou=alias,dc=ra-gas,dc=de
 domain = ra-gas.de
 query_filter = (mail=%s)
 result_attribute = gosaMailAlternateAddress, gosaMailForwardingAddress

@@ -4,17 +4,17 @@ Datei `frontend.ra-gas.de.ldif` anlegen.
 
 ```ini
 # frontend.ra-gas.de.ldif
-dn: ou=people,dc=zzeroo,dc=org
+dn: ou=people,dc=ra-gas,dc=de
 objectClass: organizationalUnit
 ou: users
 
-dn: ou=groups,dc=zzeroo,dc=org
+dn: ou=groups,dc=ra-gas,dc=de
 objectClass: organizationalUnit
 ou: groups
 ```
 
 ```bash
-ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// -f frontend.ra-gas.de.ldif
+ldapadd -x -D cn=admin,dc=ra-gas,dc=de -w $PASSWORD -H ldap:// -f frontend.ra-gas.de.ldif
 ```
 
 ## SOGo Administrator Account
@@ -23,7 +23,7 @@ Lege eine Datei `sogo-admin.ldif` mit folgendem Inhalt an:
 
 ```ini
 # sogo-admin.ldif
-dn: uid=sogo,ou=people,dc=zzeroo,dc=org
+dn: uid=sogo,ou=people,dc=ra-gas,dc=de
 objectClass: top
 objectClass: inetOrgPerson
 objectClass: person
@@ -36,13 +36,15 @@ givenName: SOGo
 ```
 
 ```bash
-ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// -f sogo-admin.ldif
+ldapadd -x -D cn=admin,dc=ra-gas,dc=de -w $PASSWORD -H ldap:// -f sogo-admin.ldif
 ```
 
 Password des Benutzers setzen
 
+> **Tipp**, wenn der letzte Parameter `-s` mit dem Password weg gelassen wird. Dann wird ein zufälliges Password vergeben und auf der Console ausgegeben. Probiert es einfach aus. Der Befehl kann beliebig oft wiederholt werden, ein Password soll ja oft geändert werden.
+
 ```bash
-ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=sogo,ou=people,dc=zzeroo,dc=org -s $PASSWORD
+ldappasswd -x -D cn=admin,dc=ra-gas,dc=de -w $PASSWORD -H ldap:// uid=sogo,ou=people,dc=ra-gas,dc=de -s $PASSWORD
 ```
 
 ## Benutzer anlegen
@@ -52,7 +54,7 @@ Eine Datei mit dem Namen `users.ldif` anlegen.
 ```ini
 # users.ldif
 # S. Mueller
-dn: uid=smueller,ou=people,dc=zzeroo,dc=org
+dn: uid=smueller,ou=people,dc=ra-gas,dc=de
 objectClass: top
 objectClass: inetOrgPerson
 objectClass: person
@@ -64,7 +66,7 @@ sn: Mueller
 givenName: Stefan
 
 # H. Kliemann
-dn: uid=hkliemann,ou=people,dc=zzeroo,dc=org
+dn: uid=hkliemann,ou=people,dc=ra-gas,dc=de
 objectClass: top
 objectClass: inetOrgPerson
 objectClass: person
@@ -76,7 +78,7 @@ sn: Kliemann
 givenName: Helge
 
 # I. Kaltenbach
-dn: uid=ikaltenbach,ou=people,dc=zzeroo,dc=org
+dn: uid=ikaltenbach,ou=people,dc=ra-gas,dc=de
 objectClass: top
 objectClass: inetOrgPerson
 objectClass: person
@@ -88,7 +90,7 @@ sn: Kaltenbach
 givenName: Ingrid
 
 # K. Keilhofer
-dn: uid=kkeilhofer,ou=people,dc=zzeroo,dc=org
+dn: uid=kkeilhofer,ou=people,dc=ra-gas,dc=de
 objectClass: top
 objectClass: inetOrgPerson
 objectClass: person
@@ -100,7 +102,7 @@ sn: Keilhofer
 givenName: Karlheinz
 
 # D. Pfeiffer
-dn: uid=dpfeiffer,ou=people,dc=zzeroo,dc=org
+dn: uid=dpfeiffer,ou=people,dc=ra-gas,dc=de
 objectClass: top
 objectClass: inetOrgPerson
 objectClass: person
@@ -115,18 +117,18 @@ givenName: Dennis
 Anschließend wird die `users.ldif` eingelesen.
 
 ```bash
-ldapadd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// -f users.ldif
+ldapadd -x -D cn=admin,dc=ra-gas,dc=de -w $PASSWORD -H ldap:// -f users.ldif
 ```
 
 
 ## Passworte festlegen
 
-Die Passworte (Parameter `-s`) können jederzeit und immer wieder geändert werden. Wird der Parameter `-s` weg gelassen dann wird ein zufälliges Passwort vergeben.
+> Auch hier gilt, wird der Parameter `-s` weg gelassen dann wird ein zufälliges Passwort gesetzt und auf der Console ausgegeben.
 
 ```bash
-ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=smueller,ou=people,dc=zzeroo,dc=org -s $PASSWORD
-ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=hkliemann,ou=people,dc=zzeroo,dc=org -s kliemann
-ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=ikaltenbach,ou=people,dc=zzeroo,dc=org -s kaltenbach
-ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=kkeilhofer,ou=people,dc=zzeroo,dc=org -s keilhofer
-ldappasswd -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=dpfeiffer,ou=people,dc=zzeroo,dc=org -s pfeiffer
+ldappasswd -x -D cn=admin,dc=ra-gas,dc=de -w $PASSWORD -H ldap:// uid=smueller,ou=people,dc=ra-gas,dc=de -s $PASSWORD
+ldappasswd -x -D cn=admin,dc=ra-gas,dc=de -w $PASSWORD -H ldap:// uid=hkliemann,ou=people,dc=ra-gas,dc=de -s $PASSWORD
+ldappasswd -x -D cn=admin,dc=ra-gas,dc=de -w $PASSWORD -H ldap:// uid=ikaltenbach,ou=people,dc=ra-gas,dc=de -s $PASSWORD
+ldappasswd -x -D cn=admin,dc=ra-gas,dc=de -w $PASSWORD -H ldap:// uid=kkeilhofer,ou=people,dc=ra-gas,dc=de -s $PASSWORD
+ldappasswd -x -D cn=admin,dc=ra-gas,dc=de -w $PASSWORD -H ldap:// uid=dpfeiffer,ou=people,dc=ra-gas,dc=de -s $PASSWORD
 ```

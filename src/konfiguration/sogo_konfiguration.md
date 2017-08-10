@@ -28,8 +28,8 @@ Die Einstellungsdatei ist unter `/etc/sogo/sogo.conf` zu finden. Dies ist eine T
       UIDFieldName = uid;
       IDFieldName = uid; // first field of the DN for direct binds
       bindFields = (uid, mail); // array of fields to use for indirect binds
-      baseDN = "ou=people,dc=zzeroo,dc=org";
-      bindDN = "uid=sogo,ou=people,dc=zzeroo,dc=org";
+      baseDN = "ou=people,dc=ra-gas,dc=de";
+      bindDN = "uid=sogo,ou=people,dc=ra-gas,dc=de";
       bindPassword = $PASSWORD;
       canAuthenticate = YES;
       displayName = "Mitarbeiter";

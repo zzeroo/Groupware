@@ -1,4 +1,9 @@
-# TLS Setup
+# TLS einrichten
+
+```bash
+ldapsearch -Y EXTERNAL -H ldaps:/// -b "cn=config"
+```
+
 
 * [https://documentation.fusiondirectory.org/en/documentation/tls_support](https://documentation.fusiondirectory.org/en/documentation/tls_support)
 
@@ -26,10 +31,10 @@ dn: cn=config
 changetype: modify
 add: olcTLSCipherSuite
 olcTLSCipherSuite: NORMAL
-- 
+-
 add: olcTLSCRLCheck
 olcTLSCRLCheck: none
-- 
+-
 add: olcTLSVerifyClient
 olcTLSVerifyClient: never
 -
@@ -60,35 +65,9 @@ systemctl status slapd.service
 Testen
 
 ```bash
+ldapsearch -Y EXTERNAL -H ldaps:/// -b "cn=config"
+```
+
+```bash
 ldapsearch -x -D "cn=admin,dc=zzeroo,dc=org" -w "secret" -H ldaps://mail.ra-gas.de/ -b dc=zzeroo,dc=org -w $PASSWORD
 ```
-
-
-----
-
-# FAQ
-
-## Fehler: `ldap_modify: Other (e.g., implementation specific) error (80)`
-
-```bash
-# ldapmodify -Y EXTERNAL -H ldapi:/// -f tls.ldif 
-SASL/EXTERNAL authentication started
-SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
-SASL SSF: 0
-modifying entry "cn=config"
-ldap_modify: Other (e.g., implementation specific) error (80)
-```
-
-## Lösung: `ldap_modify: Other (e.g., implementation specific) error (80)`
-
-Die Dateisystemberechtigungen stimmten nicht. Bitte unbedingt folgende Befehle auführen.
-
-```bash
-useradd letsencrypt
-chown openldap:letsencrypt /etc/letsencrypt/ -R
-usermod -a -G letsencrypt openldap
-```
-
-
-
-ldapsearch -D "cn=saslauthd,ou=dsa,dc=zzeroo,dc=org" -w hackthor -H ldap://mail.ra-gas.de -b "ou=people,dc=zzeroo,dc=org" ¨CZZ

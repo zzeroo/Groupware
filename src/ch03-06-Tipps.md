@@ -3,21 +3,21 @@
 ## Benutzer Löschen
 
 ```bash
-ldapdelete -x -D cn=admin,dc=zzeroo,dc=org -w $PASSWORD -H ldap:// uid=smueller,ou=people,dc=zzeroo,dc=org
+ldapdelete -x -D cn=admin,dc=ra-gas,dc=de -w $PASSWORD -H ldap:// uid=smueller,ou=people,dc=ra-gas,dc=de
 ```
 
 ## Alle Benutzer auflisten
 
 ```bash
-ldapsearch -xLLL -b dc=zzeroo,dc=org
+ldapsearch -xLLL -b dc=ra-gas,dc=de
 ```
 
 ## Bind testen
 
 ```bash
 # ldapwhoami -vvv -h <hostname> -p <port> -D <binddn> -x -w <passwd>
-ldapwhoami -vvv -h localhost -D cn=admin,dc=zzeroo,dc=org -x -w $PASSWORD
-ldapwhoami -vvv -h localhost -D uid=smueller,ou=people,dc=zzeroo,dc=org -x -w $PASSWORD
+ldapwhoami -vvv -h localhost -D cn=admin,dc=ra-gas,dc=de -x -w $PASSWORD
+ldapwhoami -vvv -h localhost -D uid=smueller,ou=people,dc=ra-gas,dc=de -x -w $PASSWORD
 ```
 
 ## OpenLDAP log in rsyslog
@@ -43,7 +43,7 @@ systemctl restart rsyslog.service
 ```
 
 ```
-ldapsearch -Y external -H ldapi:/// 
+ldapsearch -Y external -H ldapi:///
 ```
 
 ```
@@ -57,11 +57,11 @@ cat /var/log/slapd.log
 Der erste Befehl liefert die aktuelle Loglevel Konfiguration.
 
 ```
-ldapsearch -Y external -H ldapi:/// -b cn=config "(objectClass=olcGlobal)" olcLogLevel -LLL 
+ldapsearch -Y external -H ldapi:/// -b cn=config "(objectClass=olcGlobal)" olcLogLevel -LLL
 ```
 
 ```yaml
-# ldapsearch -Y external -H ldapi:/// -b cn=config "(objectClass=olcGlobal)" olcLogLevel -LLL 
+# ldapsearch -Y external -H ldapi:/// -b cn=config "(objectClass=olcGlobal)" olcLogLevel -LLL
 SASL/EXTERNAL authentication started
 SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
 SASL SSF: 0
@@ -87,7 +87,7 @@ ldapmodify -Y external -H ldapi:/// -f slapdlog.ldif
 Das Ergebnis kann wieder mit dem Befehl `ldapsearch` geprüft werden.
 
 ```
-ldapsearch -Y external -H ldapi:/// -b cn=config "(objectClass=olcGlobal)" olcLogLevel -LLL 
+ldapsearch -Y external -H ldapi:/// -b cn=config "(objectClass=olcGlobal)" olcLogLevel -LLL
 ```
 
 ```bash
@@ -110,4 +110,3 @@ olcSecurity: tls=128
 ```bash
 ldapmodify -Y EXTERNAL -H ldapi:/// -f slapd_config_TLS_enforce.ldif
 ```
-

@@ -1,4 +1,4 @@
-# OpenLDAP Konfiguration
+# Konfiguration OpenLDAP
 
 [Debian Wiki OpenLDAP Setup][debian-wiki-openldap-setup]
 
@@ -48,6 +48,5 @@ Das LDAPv2 Protokoll soll nicht mehr verwendet werden.
 Die Konfigruation kann mit diesem Befehl geprüft werden:
 
 ```bash
-ldapsearch -Y EXTERNAL -H ldapi:/// -b "cn=config" 
+ldapsearch -Y EXTERNAL -H ldapi:/// -b "cn=config"
 ```
-
