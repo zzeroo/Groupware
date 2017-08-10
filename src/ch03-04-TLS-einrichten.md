@@ -1,13 +1,13 @@
 # TLS einrichten
 
+Wenn wir versuchen über den SSL Port "ldaps://" eine Verbindung herzustellen, dann scheitert dies. 
+
 ```bash
-ldapsearch -Y EXTERNAL -H ldaps:/// -b "cn=config"
+ldapsearch -x -D "cn=admin,dc=ra-gas,dc=de" -w $PASSWORD -H ldaps://mail.ra-gas.de/ -b dc=ra-gas,dc=de
 ```
-
-
 * [https://documentation.fusiondirectory.org/en/documentation/tls_support](https://documentation.fusiondirectory.org/en/documentation/tls_support)
 
-Dateisystemberechtigungen erweitern
+Zuerst müssen wir einen gemeinsamen Benutzer und Gruppe (`letsencrypt`) anlegen und einige Dateisystemberechtigungen erweitern. Der letzte Befehl fügt den Benutzer `openldap` der Gruppe `letsencrypt` hinzu.
 
 ```bash
 useradd letsencrypt
@@ -15,7 +15,7 @@ chown openldap:letsencrypt /etc/letsencrypt/ -R
 usermod -a -G letsencrypt openldap
 ```
 
-Activate services
+Dann muss der SSL Port des `slapd` Dienstes aktiviert werden.
 
 ```ini
 # /etc/default/slapd
@@ -23,7 +23,7 @@ Activate services
 SLAPD_SERVICES="ldap:/// ldapi:/// ldaps:///"
 ```
 
-Nun informieren wir OpenLDAP wo es die Letsencrypt Certs finden kann.
+Nun informieren wir OpenLDAP wo es die Letsencrypt Zertifikate finden kann.
 
 ```ini
 # tls.ldif
@@ -55,19 +55,17 @@ olcTLSProtocolMin: 3.3
 ldapmodify -Y EXTERNAL -H ldapi:/// -f tls.ldif
 ```
 
-Nun noch ldap neu starten und den status checken
+Dann wird der OpenLDAP Dienst `slapd` neu gestartet und dessen Zustand geprüft.
 
 ```bash
 systemctl restart slapd.service
 systemctl status slapd.service
 ```
 
-Testen
+## Test
+
+Jetzt funktioniert der Befehl von Oben. Wir "binden" gegen den admin mit unserem OpenLDAP Password.
 
 ```bash
-ldapsearch -Y EXTERNAL -H ldaps:/// -b "cn=config"
-```
-
-```bash
-ldapsearch -x -D "cn=admin,dc=zzeroo,dc=org" -w "secret" -H ldaps://mail.ra-gas.de/ -b dc=zzeroo,dc=org -w $PASSWORD
+ldapsearch -x -D "cn=admin,dc=ra-gas,dc=de" -w $PASSWORD -H ldaps://mail.ra-gas.de/ -b dc=ra-gas,dc=de
 ```

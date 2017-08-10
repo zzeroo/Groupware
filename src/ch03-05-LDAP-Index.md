@@ -19,9 +19,6 @@ olcDbIndex: mail,givenName eq,subinitial
 -
 add: olcDbIndex
 olcDbIndex: dc eq
--
-add: gosaGroupObjects
-gosaGroupObjects: default
 ```
 
 Anschließend wieder mit `ldapmodify` einlesen.
