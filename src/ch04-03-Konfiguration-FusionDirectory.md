@@ -1,23 +1,10 @@
-# Fusion Directory Konfiguration
+# FusionDirectory Konfiguration
 
-* [http://mail.ra-gas.de/fusiondirectory](http://mail.ra-gas.de/fusiondirectory)
-* [https://documentation.fusiondirectory.org/en/documentation/admin_installation/core_installation](https://documentation.fusiondirectory.org/en/documentation/admin_installation/core_installation)
+Nach der [Installation](./ch04-01-Installation-FusionDirectory.html) steht unter der URL [http://mail.ra-gas.de/fusiondirectory](http://mail.ra-gas.de/fusiondirectory) die FusionDirectory Installation bereit. Wir werden gleich im Anschluss diese URL aufrufen und die dort beschriebenen Punkte erfüllen.
+Hilfe bietet die Dokumentation  [https://documentation.fusiondirectory.org/en/documentation/admin_installation/core_icommunity/uranium nstallation](https://documentation.fusiondirectory.org/en/documentation/admin_installation/core_installation), sie sollte vorab gelesen und verstanden werden. Es schadet auch nicht die Webseite paralell mit offen zu haben.
 
-## Fusion Directory Schema Integration
 
-Installation der Schema erfolgt mit dem Befehl:
-
-```bash
-fusiondirectory-insert-schema
-```
-
-Prüfen kann man das Ergebnis indem man alle Schema auflistet.
-
-```bash
-fusiondirectory-insert-schema -l
-```
-
-## Fusion Directory Konfiguration via Webinterface
+## FusionDirectory Konfiguration via Webinterface
 
 Anschließend die URL [https://mail.ra-gas.de/fusiondirectory](https://mail.ra-gas.de/fusiondirectory) aufrufen und den Anweisungen folge leisten.
 
@@ -29,21 +16,24 @@ Anschließend wird die Sprache der Oberfläche gewählt.
 
 [![](../images/fusiondirectory-konfiguration-02.png)](../images/fusiondirectory-konfiguration-02.png)
 
-PHP gecheckt, 
+PHP gecheckt,
 
 [![](../images/fusiondirectory-konfiguration-03.png)](../images/fusiondirectory-konfiguration-03.png)
 
-und die Zugangsdaten für den OpenLDAP Server eingetragen (Admin DN und Password). Der Hacken bai "TLS connection" wird gesetzt.
+und die Zugangsdaten für den OpenLDAP Server eingetragen (Admin DN und Password).
+Der Haken bai "TLS connection" muss auch gesetzt werden.
 
 [![](../images/fusiondirectory-konfiguration-04.png)](../images/fusiondirectory-konfiguration-04.png)
 
-Im Oberen Teil der Konfiguration, unter "SSL" werden die letsencrypt Zertifikatpfade eingetragen.
+In diesem Dialog wird zunächst oben die **Timezone** gesetzt. Danach werden im mittleren Teil der Konfiguration, unter **SSL**, die letsencrypt Zertifikatpfade eingetragen.
+
+||
+|:----|----|
+|Key path            |`/etc/letsencrypt/live/mail.ra-gas.de/privkey.pem`
+|Certificate path    |`/etc/letsencrypt/live/mail.ra-gas.de/cert.pem`
+|CA certificate path |`/etc/letsencrypt/live/mail.ra-gas.de/fullchain.pem`
 
 [![](../images/fusiondirectory-konfiguration-05.png)](../images/fusiondirectory-konfiguration-05.png)
-
-Der "Users RDN" muss nach `ou=people` geändert werden.
-
-[![](../images/fusiondirectory-konfiguration-06.png)](../images/fusiondirectory-konfiguration-06.png)
 
 Die "LDAP inspection" zeigt einige offen Punkt. Diese werden von oben nach unten abgearbeitet.
 
@@ -53,7 +43,7 @@ Auf "Migrate" klicken, anschließend auf "Close",
 
 [![](../images/fusiondirectory-konfiguration-08.png)](../images/fusiondirectory-konfiguration-08.png)
 
-und alle noch offenen Punkte der Reihe nach fixen. Der Fusion Directory Admin "fd-admin" hat später alle Rechte. Ein entsprechend gutes Password sollte hier gewählt werden.
+und alle noch offenen Punkte der Reihe nach fixen. Der FusionDirectory Admin "fd-admin" hat später alle Rechte. Ein entsprechend gutes Password sollte hier gewählt werden.
 
 [![](../images/fusiondirectory-konfiguration-09.png)](../images/fusiondirectory-konfiguration-09.png)
 
@@ -77,16 +67,16 @@ scp Downloads/fusiondirectory.conf mail.ra-gas.de:/tmp/
 
 > Achtung, Wechsel auf LDAP Server!
 
-Auf dem Fusion Directory Server die Konfigurationsdatein nach `/etc/fusiondirectory/fusiondirectory.conf` kopieren,
+Auf dem FusionDirectory Server die Konfigurationsdatein nach `/etc/fusiondirectory/fusiondirectory.conf` kopieren,
 
 ```bash
-cp /tmp/fusiondirectory.conf /etc/fusiondirectory/fusiondirectory.conf 
+cp /tmp/fusiondirectory.conf /etc/fusiondirectory/fusiondirectory.conf
 ```
 
-Und den vorgeschlagen Check ausführen.
+Und den vorgeschlagen Check ausführen. Es wird ein Fix vorgeschlagen. Dieser muss mit `Yes` bestätigt werden. Es werden dabei lediglich einige Dateisytemberechtigungen gesetzt.
 
 ```bash
-fusiondirectory-setup --check-config 
+fusiondirectory-setup --check-config
 ```
 
 Danach kann auf "Next" geklickt werden.
@@ -94,7 +84,7 @@ Danach kann auf "Next" geklickt werden.
 [![](../images/fusiondirectory-konfiguration-13.png)](../images/fusiondirectory-konfiguration-13.png)
 
 
-Jetzt kann mit dem Fusion Directory Super User (fd-admin) eingeloggt weden.
+Jetzt kann mit dem FusionDirectory Super User (fd-admin) eingeloggt weden.
 
 [![](../images/fusiondirectory-konfiguration-14.png)](../images/fusiondirectory-konfiguration-14.png)
 

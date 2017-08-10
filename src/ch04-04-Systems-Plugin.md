@@ -1,6 +1,6 @@
 # Systems Plugin
 
-Viele Plugins setzen auf das Systems Plugin auf. Also muss dieses zuerst installiert werden.
+Viele FusionDirectory Plugins setzen auf das **Systems** Plugin auf.
 
 ```bash
 apt install fusiondirectory-plugin-systems fusiondirectory-plugin-systems-schema
@@ -13,4 +13,3 @@ fusiondirectory-insert-schema -i /etc/ldap/schema/fusiondirectory/service-fd.sch
 fusiondirectory-insert-schema -i /etc/ldap/schema/fusiondirectory/systems-fd-conf.schema
 fusiondirectory-insert-schema -i /etc/ldap/schema/fusiondirectory/systems-fd.schema
 ```
-
