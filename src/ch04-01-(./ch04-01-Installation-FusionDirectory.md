@@ -1,1 +1,0 @@
-# FusionDirectory Schema Integration

@@ -29,6 +29,7 @@
     - [Konfiguration fusiondirectory](./ch04-03-Konfiguration-FusionDirectory.md)
     - [Systems Plugin](./ch04-04-Systems-Plugin.md)
     - [DSA Plugin](./ch04-05-DSA-Plugin.md)
+        - [DSA Benutzer anlegen](./ch04-05-00-DSA-Benutzer-anlegen.md)
     - [Mail Plugin](./ch04-06-Mail-Plugin.md)
     - [Postfix Plugin](./ch04-07-Postfix-Plugin.md)
     - [Tipp's](./ch04-09-Tipps.md)
