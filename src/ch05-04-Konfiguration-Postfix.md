@@ -1,10 +1,4 @@
-# Postfix/ Dovecot Konfiguration
-
-Im Fusion Directory muss im DSA Plugin ein DSA (Domain Service Account) "postfix" angelegt werden.
-
-[![](./images/fd-dsa-postfix-01.png)](./images/fd-dsa-postfix-01.png)
-[![](./images/fd-dsa-postfix-02.png)](./images/fd-dsa-postfix-02.png)
-[![](./images/fd-dsa-postfix-03.png)](./images/fd-dsa-postfix-03.png)
+# Konfiguration Postfix
 
 Die Postfix Konfigurationsdatei ist unter `/etc/postfix/main.cf` zu finden.
 
@@ -22,7 +16,6 @@ readme_directory = no
 smtpd_tls_cert_file=/etc/letsencrypt/live/mail.ra-gas.de/cert.pem
 smtpd_tls_key_file=/etc/letsencrypt/live/mail.ra-gas.de/privkey.pem
 smtpd_use_tls=yes
-smtpd_tls_security_level = may
 smtpd_tls_auth_only = yes
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
@@ -52,6 +45,7 @@ alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 myorigin = /etc/mailname
 mydestination = localhost.localdomain, localhost
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 172.31.37.176 52.28.204.86
 relayhost =
 mailbox_size_limit = 0
 recipient_delimiter = +
@@ -75,7 +69,6 @@ smtpd_recipient_restrictions =
     check_sender_mx_access cidr:/etc/postfix/drop.cidr
     reject_rbl_client bl.spamcop.net,
     reject_rbl_client cbl.abuseat.org
-    reject
 smtpd_data_restrictions = reject_multi_recipient_bounce
 smtpd_sender_restrictions =
     reject_non_fqdn_sender
@@ -94,74 +87,68 @@ virtual_transport = dovecot
 dovecot_destination_recipient_limit = 1
 
 virtual_mailbox_domains = ra-gas.de
-virtual_mailbox_maps = hash:/etc/postfix/vmailbox
-virtual_alias_maps = hash:/etc/postfix/virtual
+virtual_mailbox_maps = ldap:/etc/postfix/ldap-accounts.cf
+#virtual_alias_maps = ldap:/etc/postfix/ldap-aliases.cf ldap:/etc/postfix/ldap-forward.cf ldap:/etc/postfix/ldap-forward-only.cf
+
+smtpd_sasl_auth_enable = yes
+broken_sasl_auth_clients = yes
+
+compatibility_level = 2
 ```
 
 ```conf
-# /etc/postfix/vmailbox
+# /etc/postfix/ldap-accounts.cf
 
-# Domain                Anything
-ra-gas.de          whatever
-zzeroo.com          whatever
-serversonfire.de    whatever
-```
-
-```conf
-# /etc/postfix/virtual
-postmaster@ra-gas.de postmaster
-```
-
-```conf
-postmap /etc/postfix/virtual
-```
-
-```conf
-postmap /etc/postfix/vmailbox
-```
-
-```conf
-systemctl reload postfix
-```
-
-
-
-----
-
-
-```conf
-# /etc/postfix/ldap_virtual_recipients.cf
-
-bind = yes
-bind_dn = cn=postfix,ou=dsa,dc=ra-gas,dc=de
-bind_pw = $PASSWORD
-server_host = ldap://mail.ra-gas.de:389
+server_host = mail.ra-gas.de
 search_base = ou=people,dc=ra-gas,dc=de
-domain = ra-gas.de
-query_filter = (mail=%s)
-result_attribute = mail
-start_tls = yes
+scope = sub
+bind = no
 version = 3
-```
+start_tls = yes
 
-Virtuelle Aliase vorbereiten ...
+query_filter = (&(mail=%s)(objectClass=gosaMailAccount)(!(gosaMailDeliveryMode=[*I*])))
+result_attribute = mail
+```
 
 ```conf
-# /etc/postfix/ldap_virtual_aliases.cf
-
-bind = yes
-bind_dn = cn=postfix,ou=dsa,dc=ra-gas,dc=de
-bind_pw = $PASSWORD
-server_host = ldap://mail.ra-gas.de:389
-search_base = ou=alias,dc=ra-gas,dc=de
-domain = ra-gas.de
-query_filter = (mail=%s)
-result_attribute = gosaMailAlternateAddress, gosaMailForwardingAddress
-start_tls = yes
+#  /etc/postfix/ldap-aliases.cf
+server_host = mail.ra-gas.de
+search_base = ou=people,dc=ra-gas,dc=de
+scope = sub
+bind = no
 version = 3
+start_tls = yes
+
+query_filter = (&(|(objectClass=gosaMailAccount)(objectClass=mailAliasRedirection)(objectClass=mailAliasDistribution))(|(mail=%s)(gosaMailAlternateAddress=%s)))
+result_attribute = gosaMailServer,gosaMailAlternateAddress
 ```
 
-Identity Check vorbereiten
+```conf
+# /etc/postfix/ldap-forward.cf
+server_host = mail.ra-gas.de
+search_base = ou=people,dc=ra-gas,dc=de
+scope = sub
+bind = no
+version = 3
+start_tls = yes
+
+query_filter = (&(|(gosaMailAlternateAddress=%s)(mail=%s))(objectClass=gosaMailAccount)(!(gosaMailDeliveryMode=[*I*])))
+result_attribute = mail,gosaMailForwardingAddress
+```
+
+```conf
+# /etc/postfix/ldap-forward-only.cf
+server_host = mail.ra-gas.de
+search_base = ou=people,dc=ra-gas,dc=de
+scope = sub
+bind = no
+version = 3
+
+query_filter = (&(|(gosaMailAlternateAddress=%s)(mail=%s))(gosaMailDeliveryMode=[*I*])(objectClass=gosaMailAccount))
+result_attribute = gosaMailForwardingAddress
+```
+
+## Identity Check
 
 ```conf
 # /etc/postfix/identitycheck.pcre
@@ -173,7 +160,7 @@ Identity Check vorbereiten
 /^(\[1\.2\.3\.4\])$/            REJECT Hostname Abuse: $1
 ```
 
-Blacklist File vorbereiten
+## Blacklist File vorbereiten
 
 ```conf
 # /etc/postfix/drop.cidr
@@ -183,11 +170,7 @@ Blacklist File vorbereiten
 1.2.3.0/24                      REJECT Blacklisted
 ```
 
-virtual domains hashmap erstellen
-
-```bash
-postmap hash:/etc/postfix/virtual_domains
-```
+## Postfix neu starten
 
 Das Alles sollte eine funktionierende Konfiguration ergeben. Getestet wird dies indem der postfix Server neu gestartet und anschließend sein Status geprüft wird.
 
@@ -196,24 +179,41 @@ systemctl restart postfix
 systemctl status postfix
 ```
 
+
+## Support für SMTPs Ports 465 und 587 aktivieren
+
 Auf welche Ports Postfix hört kann mit folgendem Befehl geprüft werden
 
 ```bash
 ss -lnptu | grep master
 ```
 
-## Support für SMTPs Ports 465 und 587 aktivieren
+Dieser Befehl zeigt an das nur auf Port `` gehört wird (TCP/IPv4 und TCP/IPv6).
+Um die SSL Ports zu aktivieren muss die Datei `/etc/postfix/master.cf` editiert werden.
 
-Dazu die Datei `/etc/postfix/master.cf` editieren und die beiden folgenden Zeilen entkommentieren.
+Bitte `submission` und `smtps` wie folgt konfigurieren.
 
 ```conf
 # /etc/postfix/master.cf
 
-submission inet n       -       -       -       -       smtpd
-smtps     inet  n       -       -       -       -       smtpd
+submission inet n       -       y       -       -       smtpd
+  -o syslog_name=postfix/submission
+  -o smtpd_tls_security_level=encrypt
+  -o smtpd_sasl_auth_enable=yes
+  -o smtpd_sasl_type=dovecot
+  -o smtpd_sasl_path=private/auth
+  -o smtpd_relay_restrictions=permit_sasl_authenticated,reject
+
+smtps     inet  n       -       y       -       -       smtpd
+  -o syslog_name=postfix/smtps
+  -o smtpd_tls_wrappermode=yes
+  -o smtpd_sasl_auth_enable=yes
+  -o smtpd_sasl_type=dovecot
+  -o smtpd_sasl_path=private/auth
+  -o smtpd_relay_restrictions=permit_sasl_authenticated,reject
 ```
 
-Nun wieder postfix neu starten und Status checken
+Nun Postfix neu starten und anschließend den Postfix Status checken
 
 ```bash
 systemctl restart postfix
@@ -236,10 +236,10 @@ openssl dhparam -2 -out dh_1024.pem 1024
 chmod 600 dh_*
 ```
 
-Test
+### Test
 
 ```bash
-postmap -q s.mueller@ra-gas.de ldap:/etc/postfix/ldap_virtual_recipients.cf 
+postmap -q s.mueller@ra-gas.de ldap:/etc/postfix/ldap-accounts.cf
 ```
 
 der Test sollte folgendes Ergebnis bringen:
@@ -248,3 +248,8 @@ der Test sollte folgendes Ergebnis bringen:
 s.mueller@ra-gas.de
 ```
 
+# Links
+
+* [Blog Post mit Postfix/ FusionDirectory LDAP][blog-mit-working-ldap]:
+
+[blog-mit-working-ldap]: https://wikit.firewall-services.com/doku.php/tuto/fusiondirectory/postfix

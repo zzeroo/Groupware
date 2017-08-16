@@ -1,1 +1,5 @@
-# Installation
+# PostgreSQL Installation
+
+```bash
+apt install postgresql
+```

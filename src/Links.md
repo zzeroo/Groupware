@@ -8,7 +8,8 @@
     * [SOGo Installation and Configuration Guide][sogo-installation]
 - LDAP
     * [Debian Wiki OpenLDAP Setup][debian-wiki-openldap-setup]
-    * [Super LDAP Anleitung][digitalocean-ldap]
+    * [Super LDAP Anleitung von Digitalocean][digitalocean-ldap]
+    * [Change LDAP Passwords auch von Digitalocean][digitalocean-change-pass]
 - Postfix
     * [Postfix SASL Howto](http://www.postfix.org/SASL_README.html)
 - Domain und Rootserver
@@ -28,6 +29,7 @@
 [CyrusIMAP]: https://cyrusimap.org/
 [debian-wiki-openldap-setup]: https://wiki.debian.org/LDAP/OpenLDAPSetup
 [digitalocean-ldap]: https://www.digitalocean.com/community/tutorials/how-to-use-ldif-files-to-make-changes-to-an-openldap-system
+[digitalocean-change-pass]: https://www.digitalocean.com/community/tutorials/how-to-change-account-passwords-on-an-openldap-server
 [letsencrypt]: https://letsencrypt.org/
 [login-1und1]: https://account.1und1.de/
 [login-amazon]: https://console.aws.amazon.com

@@ -1,13 +1,4 @@
-# SASL Installation für SMTP AUTH
-
-Quelle dieser Anleitung: [https://www.theo-andreou.org/?p=1568#comment-10434](https://www.theo-andreou.org/?p=1568#comment-10434)
-
-Im Fusion Directory muss im DSA Plugin ein DSA (Domain Service Account) "saslauthd" angelegt werden.
-
-[![](./images/fd-dsa-saslauthd-01.png)](./images/fd-dsa-saslauthd-01.png)
-[![](./images/fd-dsa-saslauthd-02.png)](./images/fd-dsa-saslauthd-02.png)
-[![](./images/fd-dsa-saslauthd-03.png)](./images/fd-dsa-saslauthd-03.png)
-
+# Konfiguration SASL für SMTP AUTH
 
 Beginnen wir mit dem Anlegen der Datei `/etc/postfix/sasl/smtpd.conf`.
 
@@ -24,15 +15,19 @@ Ersetze danach folgende Zeilen in `/etc/default/saslauthd`.
 ```ini
 # /etc/default/saslauthd
 
+#START=no
 START=yes
+#MECHANISMS="pam"
 MECHANISMS="ldap"
+
+#OPTIONS="-c -m /var/run/saslauthd"
 OPTIONS="-c -m /var/spool/postfix/var/run/saslauthd"
 ```
 
 Und erstelle die Datei `/etc/saslauthd.conf`.
 
 ```ini
-# /etc/saslauthd.conf 
+# /etc/saslauthd.conf
 
 ldap_servers: ldap://mail.ra-gas.de:389
 ldap_bind_dn: cn=saslauthd,ou=dsa,dc=ra-gas,dc=de
@@ -44,9 +39,9 @@ ldap_search_base: ou=people,dc=ra-gas,dc=de
 ldap_auth_method: bind
 ldap_filter: (&(uid=%u)(mail=*))
 ldap_debug: 0
-ldap_verbose: yes
+ldap_verbose: no
 ldap_ssl: yes
-ldap_starttls: no
+ldap_starttls: yes
 ldap_referrals: yes
 ```
 
@@ -72,7 +67,7 @@ systemctl restart saslauthd postfix
 systemctl status saslauthd postfix
 ```
 
-## Test 
+## Test
 
 Zum Test wird das Tool `swaks` benötigt
 
@@ -83,8 +78,3 @@ apt install swaks
 ```bash
 swaks --from noreply@ra-gas.de --to s.mueller@ra-gas.de --server 127.0.0.1:25 --tls --auth plain --auth-user=smueller
 ```
-
-
-
-
-apt install mutt

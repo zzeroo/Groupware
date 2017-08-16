@@ -1,4 +1,20 @@
 # Tipp's
+## Passwort eines Benutzers setzen
+
+Das Passwort eines Benutzers kann jederzeit, immer wieder gesetzt werden.
+Der Folgende Befehl `ldappasswd` bindet (authentifiziert) den User `admin` mit dem Password `$PASSWORD` gegen den LDAP Server `localhost` um das Passwort das Users `info` zu ändern.
+Der Befehl setzt ein zufälliges Passwort und gibt dieses auf der Shell aus.
+
+```bash
+ldappasswd -x -D cn=admin,dc=ra-gas,dc=de -w $PASSWORD -H ldap:// uid=info,ou=people,dc=ra-gas,dc=de
+```
+
+Möchte man das Passwort selber festlegen dann muss dem obrigen Befehl noch der Parameter `-s` mit dem gewünschten Passswort übergeben werden.
+
+```bash
+ldappasswd -x -D cn=admin,dc=ra-gas,dc=de -w $PASSWORD -H ldap:// uid=info,ou=people,dc=ra-gas,dc=de -s NeuesP@assword
+```
+
 
 ## Benutzer Löschen
 

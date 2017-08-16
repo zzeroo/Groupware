@@ -1,3 +1,4 @@
+# Konfiguration SOGo
 # SOGo Konfiguration
 
 Quelle dieser Konfiguration ist der [SOGo Installation and Configuration Guide][sogo-installation-guide].
@@ -40,14 +41,42 @@ Die Einstellungsdatei ist unter `/etc/sogo/sogo.conf` zu finden. Dies ist eine T
   );
 ```
 
+```conf
+  WOWatchDogRequestTimeout = 60;
+  SOGoTimeZone = Europe/Berlin;
+  SOGoMailDomain = ra-gas.de;
+  SOGoLanguage = German;
+  SOGoSupportedLanguages = ( "German" );
+  // SMTP Server Configuration
+  SOGoMailingMechanism = smtp;
+  SOGoSMTPServer = smtp.ra-gas.de;
+  SOGoForceExternalLoginWithEmail = YES;
+
+  // IMAP Server Configuration
+  SOGoIMAPServer = "imap://imap.ra-gas.de:143/?tls=YES";
+  //SOGoIMAPAclStyle = rfc2086;
+  SOGoIMAPAclConformsToIMAPExt = YES;
+  //SOGoSieveServer = "sieve://127.0.0.1:2000/?tls=YES";
+  SOGoForceExternalLoginWithEmail = YES;
+
+  // Web Interface Configuration
+  SOGoFirstDayOfWeek = 1;
+
+  SOGoMailKeepDraftsAfterSend = YES;
+```
+
 # Apache2 Konfiguration
 
-> **TODO**: Die Apache Konfigurationsdateien checken, `/etc/apache2/conf.d/SOGo.conf` und `/etc/apache2/conf-available/SOGo.conf`
+Der SOGo Installer installiert die Apache2/SOGo Konfigurationsdatei nach `/etc/apache2/conf.d/SOGo.conf` richtig ist aber dieser Pfad `/etc/apache2/conf-available/SOGo.conf`. Wir korregieren das mit folgendem Befehl:
+
+```bash
+mv /etc/apache2/conf.d/SOGo.conf /etc/apache2/conf-available/SOGo.conf
+```
+
+Anschließend wird diese Konfiguration aktiviert
 
 ```conf
-RequestHeader set "x-webobjects-server-port" "443"
-RequestHeader set "x-webobjects-server-name" "sogo"
-RequestHeader set "x-webobjects-server-url" "https://sogo.domain.com" [^]
+a2enconf SOGo
 ```
 
 # Microsoft Enterprise ActiveSync
@@ -83,49 +112,6 @@ und SOGo neustarten ...
 systemctl start sogo.service
 systemctl status sogo.service
 ```
-
-----
-
-# FAQ
-
-## Fehler: SOGo Website nicht erreichbar
-
-Unter der SOGo Url war keine Webseite erreichbar.
-
-## Lösung:
-
-Auf einer Debian Jessie Installation musste die Apache2 SOGo Konfig von Hand aktiviert werden.
-
-```bash
-a2enconf SOGo
-systemctl reload apache2
-```
-
-
-----
-
-# Tipp's
-
-```
-Am 19.07.2017 um 13:39 schrieb Marko Weber | 8000 (weber@zbfmail.de):
->
-> hello list!,
->
-> i want to ask if it is possible to have "ONE" global addressbook in sogo
-> for multiple added domains?
-> so when sogo is running for     domone.de , domtwo.de , domthree.de <-
-> can they use together one global addressbook?
->
-> thanks for any help and hints...
->
-
-Yes, you can use one SOGoUserSources entry for the address book and one
-for the authentication part.
-The address book has "isAddressBook = YES;" and "canAuthenticate = NO;".
-The authentication one has "isAddressBook = NO;" and "canAuthenticate =
-YES;".
-```
-
 
 
 [sogo-installation-guide]: https://sogo.nu/files/docs/SOGoInstallationGuide.html
