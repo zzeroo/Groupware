@@ -68,15 +68,16 @@ verbose_ssl = no
 
 ## Maildir konfigurieren
 
-In der Datein `` wird zuerst der Speicherort der Mailboxen definiert
+In der Datei `/etc/dovecot/conf.d/10-mail.conf` wird zuerst der Speicherort der Mailboxen definiert
 
 ```ini
 # /etc/dovecot/conf.d/10-mail.conf
 
 mail_location = mbox:~/mail:INBOX=/srv/vmail/%u
+mail_location = maildir:/srv/vmail/%u/Maildir
 ```
 
-Der User (vmail) mit der UserID 5000 wird gleich erstellt.
+Der User (vmail) mit der UserID und GroupID 5000 wird gleich weiter unten erstellt.
 
 ```ini
 # /etc/dovecot/conf.d/10-mail.conf
