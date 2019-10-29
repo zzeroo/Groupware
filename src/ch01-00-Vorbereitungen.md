@@ -1,18 +1,16 @@
 # Vorbereitungen
-## Debian Paketquellen vorbereiten (Apt sources.list)
+## Debian 10
 
-Wir verwenden die `testing` Repos von [Debian][debian].
+Wir verwenden die [Debian][debian] `stable` Version, zur Zeit (2019-1024) ist diese
+Version Debian 10 '[buster]'
 
-Dazu muss die Datei `sources.list` mit folgendem Inhalt überschrieben werden.
-
-```bash
-echo "deb http://cdn-aws.deb.debian.org/debian testing main contrib non-free" | tee /etc/apt/sources.list
-```
-
-Danach wird Apt und danach das System aktualisiert.
+Die `sources.list` des SOGo Servers sollte wie folgt aussehen.
 
 ```bash
-apt update
-apt dist-upgrade
-apt autoremove
+# /etc/apt/sources.list
+deb http://deb.debian.org/debian stable contrib main non-free
 ```
+
+
+[debian]: https://debian.org
+[buster]: https://wiki.debian.org/DebianBuster
