@@ -25,7 +25,7 @@
     - [OpenLDAP FAQ](./ch03-08-FAQ.md)
 - [FusionDirectory](./ch04-00-FusionDirectory.md)
     - [Installation FusionDirectory](./ch04-01-Installation-FusionDirectory.md)
-    - [FusionDirectory Schema Integration](./ch04-02-FusionDirectory Schema Integration.md)
+    - [FusionDirectory Schema Integration](./ch04-02-FusionDirectory-Schema-Integration.md)
     - [Konfiguration fusiondirectory](./ch04-03-Konfiguration-FusionDirectory.md)
     - [Systems Plugin](./ch04-04-Systems-Plugin.md)
     - [DSA Plugin](./ch04-05-DSA-Plugin.md)

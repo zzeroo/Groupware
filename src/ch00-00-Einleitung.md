@@ -17,4 +17,4 @@ set PASSWORD=fumanchu123$
 set PASSWORD fumanchu123$
 ```
 
-Einmal gesetzt (set) ersetzt eure Shell nun immer `$PASSWORD` durch `fumanchu123$`. Diese Umgebungvariable gilt bis ihr die Shell schließt. Ihr müsst sie also immer wieder setzen.
+Einmal gesetzt (set) ersetzt eure Shell nun immer `$PASSWORD` durch `fumanchu123$`. Diese Umgebungvariable gilt bis ihr die Shell schließt. Ihr müsst sie also immer wieder setzen. Und sucht garnicht erst bei Google nach einem Weg das automatisch zu setzten ;) das wäre immer ein Sicherheitsrisiko.

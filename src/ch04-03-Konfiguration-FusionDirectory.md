@@ -1,11 +1,10 @@
 # FusionDirectory Konfiguration
-
 Nach der [Installation](./ch04-01-Installation-FusionDirectory.html) steht unter der URL [http://mail.ra-gas.de/fusiondirectory](http://mail.ra-gas.de/fusiondirectory) die FusionDirectory Installation bereit. Wir werden gleich im Anschluss diese URL aufrufen und die dort beschriebenen Punkte erfüllen.
-Hilfe bietet die Dokumentation  [https://documentation.fusiondirectory.org/en/documentation/admin_installation/core_icommunity/uranium nstallation](https://documentation.fusiondirectory.org/en/documentation/admin_installation/core_installation), sie sollte vorab gelesen und verstanden werden. Es schadet auch nicht die Webseite paralell mit offen zu haben.
+
+>Hilfe bietet die [Fusionsdirectory Dokumentation][fusiondirectory-user-manual-v1.3], sie sollte vorab gelesen und verstanden werden. Es schadet auch nicht die Webseite paralell mit offen zu haben.
 
 
 ## FusionDirectory Konfiguration via Webinterface
-
 Anschließend die URL [https://mail.ra-gas.de/fusiondirectory](https://mail.ra-gas.de/fusiondirectory) aufrufen und den Anweisungen folge leisten.
 
 Zu Begin muss eine Text Datei mit einem Hash auf dem Server erstellt werden.
@@ -35,23 +34,28 @@ In diesem Dialog wird zunächst oben die **Timezone** gesetzt. Danach werden im 
 
 [![](../images/fusiondirectory-konfiguration-05.png)](../images/fusiondirectory-konfiguration-05.png)
 
+### LDAP inspection
 Die "LDAP inspection" zeigt einige offen Punkt. Diese werden von oben nach unten abgearbeitet.
 
 [![](../images/fusiondirectory-konfiguration-07.png)](../images/fusiondirectory-konfiguration-07.png)
 
+#### Inspecting object classes in root object
 Auf "Migrate" klicken, anschließend auf "Close",
 
 [![](../images/fusiondirectory-konfiguration-08.png)](../images/fusiondirectory-konfiguration-08.png)
 
-und alle noch offenen Punkte der Reihe nach fixen. Der FusionDirectory Admin "fd-admin" hat später alle Rechte. Ein entsprechend gutes Password sollte hier gewählt werden.
+#### Checking for super administrator
+Der FusionDirectory Admin "fd-admin" hat später alle Rechte. Ein entsprechend gutes Password sollte hier gewählt werden.
 
 [![](../images/fusiondirectory-konfiguration-09.png)](../images/fusiondirectory-konfiguration-09.png)
 
-Wenn alle Punkte grün sind kann auf "Next" geklickt werden.
-
+#### Checking for default ACL roles and groups
 [![](../images/fusiondirectory-konfiguration-10.png)](../images/fusiondirectory-konfiguration-10.png)
 
-Konfigurationsdatei downloaden,
+Wenn alle Punkte grün sind kann auf "Next" geklickt werden.
+
+### Download der FusionDirectory Konfiurationsdatei
+Nun muss die Konfigurationsdatei herunter geladen werden.
 
 [![](../images/fusiondirectory-konfiguration-11.png)](../images/fusiondirectory-konfiguration-11.png)
 
@@ -62,7 +66,7 @@ und z.B. in Downloads speichern.
 Nun die Konfigurationsdatei via SCP übertragen.
 
 ```bash
-scp Downloads/fusiondirectory.conf mail.ra-gas.de:/tmp/
+scp -i ~/.ssh/sogo.gaswarnanlagen.lan ~/Downloads/fusiondirectory.conf sogo@192.168.89.16:/tmp
 ```
 
 > Achtung, Wechsel auf LDAP Server!
@@ -92,4 +96,6 @@ Finales Webinterface:
 
 [![](../images/fusiondirectory-konfiguration-15.png)](../images/fusiondirectory-konfiguration-15.png)
 
-[![](../images/fusiondirectory-konfiguration-16.png)](../images/fusiondirectory-konfiguration-16.png)
+
+
+[fusiondirectory-user-manual-v1.3]: https://fusiondirectory-user-manual.readthedocs.io/en/1.3/index.html
