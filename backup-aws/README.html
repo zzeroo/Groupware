@@ -1,7 +1,0 @@
-<h2 id="informationen-instanzen">Informationen Instanzen</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">aws</span> ec2 describe-instances --output table</code></pre></div>
-<h2 id="snapshot-via-script">Snapshot via Script</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">VOL_ID=</span><span class="st">&quot;vol-0838dde7f5808b41c&quot;</span>
-<span class="va">DESCRIPTION=</span><span class="st">&quot;Test Snapshot via Script&quot;</span>
-<span class="va">REGION=</span><span class="st">&quot;eu-central-1b&quot;</span>
-<span class="ex">aws</span> ec2 create-snapshot --volume-id <span class="va">$VOL_ID</span> --description <span class="st">&quot;</span><span class="va">$DESCRIPTION</span><span class="st">&quot;</span> --region <span class="va">$REGION</span></code></pre></div>

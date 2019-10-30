@@ -1,8 +1,0 @@
-[book]
-title = "SOGo Installation"
-description = "Installationsanweisungen SOGo Groupware Server"
-author = "Stefan Müller <s.mueller@it.kls-glt.de>"
-
-# [output.html]
-# additional-css = ["test.css"]
-# additional-js = ["test.js"]
